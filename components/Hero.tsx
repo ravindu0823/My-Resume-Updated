@@ -108,7 +108,7 @@ const Hero = ({ mainData }: HeroProps) => {
             />
           </div>
           <div
-            className={`absolute grid -top-6 -left-12 lg:-top-24 lg:left-16 w-16 h-16 md:w-20 md:h-20 ${classNames}`}
+            className={`absolute grid -top-20 left-20 lg:-top-24 lg:left-16 w-16 h-16 md:w-20 md:h-20 ${classNames}`}
           >
             <Image
               alt="tech-stack"
@@ -152,7 +152,7 @@ const Hero = ({ mainData }: HeroProps) => {
             />
           </div>
           <div
-            className={`absolute grid -bottom-10 -right-8 lg:-bottom-16 lg:right-16 w-14 md:w-20 h-14 md:h-20 ${classNames}`}
+            className={`absolute grid bottom-0 right-56 lg:-bottom-16 lg:right-16 w-14 md:w-20 h-14 md:h-20 ${classNames}`}
           >
             <Image
               alt="tech-stack"
