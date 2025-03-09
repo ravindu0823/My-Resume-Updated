@@ -14,6 +14,7 @@ const nextConfig = {
       "media.geeksforgeeks.org",
       "i.ibb.co",
       "camo.githubusercontent.com",
+      "drive.google.com",
     ],
   },
 };
