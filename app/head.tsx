@@ -13,7 +13,7 @@ export default function Head() {
       <meta property="og:site_name" content="Ravindu Perera's Portfolio" />
       <meta
         property="og:title"
-        content="Portfolio | Ravindu Perera - Full Stack Developer"
+        content="Ravindu Perera - Software Engineer || .NET CORE Developer || Portfolio"
       />
       <meta
         property="og:description"
@@ -37,14 +37,16 @@ export default function Head() {
       />
       <meta
         name="application-name"
-        content="Portfolio | Ravindu Perera - Full Stack Developer"
+        content="Ravindu Perera - Software Engineer || .NET CORE Developer || Portfolio"
       />
       <meta
         name="apple-mobile-web-app-title"
-        content="Portfolio | Ravindu Perera - Full Stack Developer"
+        content="Ravindu Perera - Software Engineer || .NET CORE Developer || Portfolio"
       />
       <link rel="icon" href="/favicon.ico" />
-      <title>Portfolio | Ravindu Perera - Full Stack Developer</title>
+      <title>
+        Ravindu Perera - Software Engineer || .NET CORE Developer || Portfolio
+      </title>
     </>
   );
 }
