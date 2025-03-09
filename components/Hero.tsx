@@ -14,6 +14,9 @@ const Hero = ({ mainData }: HeroProps) => {
   const { theme } = useTheme();
   const { name, titles, heroImage, shortDesc, techStackImages } = mainData;
 
+  const classNames =
+    "bg-white dark:bg-grey-800 rounded-full place-items-center hover:shadow-lg transition-shadow";
+
   return (
     <section
       id="home"
@@ -65,9 +68,9 @@ const Hero = ({ mainData }: HeroProps) => {
             />
           </div>
 
-          <p className="text-base md:text-base text-gray-600 dark:text-gray-300">
+          {/* <p className="text-base md:text-base text-gray-600 dark:text-gray-300">
             {shortDesc}
-          </p>
+          </p> */}
 
           <ScrollLink
             className="w-fit text-sm md:text-base py-2 px-4 cursor-pointer flex items-center gap-1 rounded-md bg-blue-700 hover:bg-blue-700 dark:bg-blue-700 hover:dark:bg-blue-800 transition-colors group text-white"
@@ -93,7 +96,9 @@ const Hero = ({ mainData }: HeroProps) => {
             />
           </div>
 
-          <div className="absolute grid -top-6 -left-12 lg:-top-14 lg:-left-32 w-16 h-16 md:w-20 md:h-20 bg-white dark:bg-grey-800 rounded-full place-items-center hover:shadow-lg transition-shadow">
+          <div
+            className={`absolute grid -top-6 -left-12 lg:-top-14 lg:-left-32 w-16 h-16 md:w-20 md:h-20 ${classNames}`}
+          >
             <Image
               alt="tech-stack"
               className="h-8 w-8 md:h-10 md:w-10 object-cover"
@@ -102,7 +107,9 @@ const Hero = ({ mainData }: HeroProps) => {
               height={100}
             />
           </div>
-          <div className="absolute grid top-0 -right-12 lg:-right-4 w-14 h-14 bg-white dark:bg-grey-800 rounded-full place-items-center hover:shadow-lg transition-shadow">
+          <div
+            className={`absolute grid -top-6 -left-12 lg:-top-24 lg:left-16 w-16 h-16 md:w-20 md:h-20 ${classNames}`}
+          >
             <Image
               alt="tech-stack"
               className="h-8 w-8 md:h-10 md:w-10 object-cover"
@@ -111,20 +118,57 @@ const Hero = ({ mainData }: HeroProps) => {
               height={100}
             />
           </div>
-          <div className="absolute grid bottom-[4rem] md:bottom-24 -right-16 md:-right-20 lg:bottom-[8.5rem] lg:-right-12 w-12 h-12 md:w-16 md:h-16 bg-white dark:bg-grey-800 rounded-full place-items-center hover:shadow-lg transition-shadow">
+          <div
+            className={`absolute grid -top-6 -left-12 lg:top-32 lg:-left-40 w-16 h-16 md:w-20 md:h-20 ${classNames}`}
+          >
             <Image
               alt="tech-stack"
-              className="h-6 w-6 md:h-10 md:w-10 object-cover"
+              className="h-8 w-8 md:h-10 md:w-10 object-cover"
               src={techStackImages[2]}
+              width={300}
+              height={300}
+            />
+          </div>
+          <div
+            className={`absolute grid top-0 -right-12 lg:-right-4 w-14 h-14 md:w-20 md:h-20 ${classNames}`}
+          >
+            <Image
+              alt="tech-stack"
+              className="h-8 w-8 md:h-10 md:w-10 object-cover"
+              src={techStackImages[3]}
               width={100}
               height={100}
             />
           </div>
-          <div className="absolute grid -bottom-10 -right-8 lg:-bottom-0 lg:right-6 w-14 md:w-16 h-14 md:h-16 bg-white dark:bg-grey-800 rounded-full place-items-center hover:shadow-lg transition-shadow">
+          <div
+            className={`absolute grid bottom-[4rem] md:bottom-24 -right-16 md:-right-20 lg:bottom-16 lg:-right-12 w-12 h-12 md:w-20 md:h-20 ${classNames}`}
+          >
+            <Image
+              alt="tech-stack"
+              className="h-6 w-6 md:h-10 md:w-10 object-cover"
+              src={techStackImages[4]}
+              width={100}
+              height={100}
+            />
+          </div>
+          <div
+            className={`absolute grid -bottom-10 -right-8 lg:-bottom-16 lg:right-16 w-14 md:w-20 h-14 md:h-20 ${classNames}`}
+          >
             <Image
               alt="tech-stack"
               className="h-10 w-10 object-cover"
-              src={techStackImages[3]}
+              src={techStackImages[5]}
+              width={100}
+              height={100}
+            />
+          </div>
+          <div
+            className={`absolute grid -bottom-10 -right-8 lg:-bottom-14 lg:right-80 w-14 md:w-20 h-14 md:h-20 ${classNames}`}
+          >
+            <Image
+              alt="tech-stack"
+              className="h-10 w-10 object-cover"
+              src={techStackImages[6]}
               width={100}
               height={100}
             />

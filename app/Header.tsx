@@ -10,13 +10,14 @@ import { CgClose, CgMenuRight } from "react-icons/cg";
 export default function Header({ logo }: { logo: string }) {
   const [navCollapse, setNavCollapse] = useState(true);
   const [scroll, setScroll] = useState(false);
-  const { theme, setTheme, systemTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false); // Track component mount
 
   // Ensure the component is mounted before rendering anything
   useEffect(() => {
     setMounted(true);
-  }, []);
+    setTheme("dark");
+  }, [setTheme]);
 
   useEffect(() => {
     const updateScroll = () => {

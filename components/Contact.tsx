@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import { BiLoaderAlt } from "react-icons/bi";
 import SectionWrapper from "./SectionWrapper";
@@ -7,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.min.css";
 
 const Contact = () => {
+  const ACCESS_KEY = process.env.NEXT_PUBLIC_ACCESS_KEY ?? "";
   const [values, setValues] = useState({
     name: "",
     email: "",
@@ -24,27 +24,37 @@ const Contact = () => {
     }
 
     setLoading(true);
-    axios
-      .post("/api/mail", {
-        name: values.name,
-        email: values.email,
-        message: values.message,
-      })
-      .then((res) => {
-        if (res.status === 200) {
-          setValues({ name: "", email: "", message: "" });
-          setLoading(false);
-          setSuccess(true);
-          toast.success(res.data.message);
-        } else {
-          setLoading(false);
-          toast.error(res.data.message);
-        }
-      })
-      .catch((err) => {
-        setLoading(false);
-        toast.error(err.message);
-      });
+
+    const formData = new FormData();
+
+    formData.append("name", values.name);
+    formData.append("email", values.email);
+    formData.append("message", values.message);
+    formData.append("access_key", ACCESS_KEY);
+
+    const object = Object.fromEntries(formData);
+    const json = JSON.stringify(object);
+
+    const response = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: json,
+    });
+
+    const result = await response.json();
+
+    if (response.ok) {
+      setValues({ name: "", email: "", message: "" });
+      setLoading(false);
+      setSuccess(true);
+      toast.success(result.message);
+    } else {
+      setLoading(false);
+      toast.error(result.message);
+    }
   };
 
   const handleChange = (
