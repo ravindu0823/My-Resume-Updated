@@ -8,9 +8,9 @@ module.exports = {
   ],
   theme: {
     extend: {
-      // fontFamily: {
-      //   poppins: ['var(--font-poppins)']
-      // },
+      fontFamily: {
+        poppins: ["var(--font-poppins)"],
+      },
       colors: {
         primaryBlue: "#1d4ed8",
         grey: {
@@ -19,6 +19,12 @@ module.exports = {
         },
         yellow: {
           400: "#FEDE00",
+        },
+        primary: {
+          100: "#180161",
+          200: "#4D55CC",
+          300: "#7A73D1",
+          400: "#B5A8D5",
         },
       },
       backgroundImage: {
