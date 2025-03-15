@@ -15,7 +15,7 @@ const Hero = ({ mainData }: HeroProps) => {
   const { name, titles, heroImage, shortDesc, techStackImages } = mainData;
 
   const classNames =
-    "bg-white dark:bg-grey-800 rounded-full place-items-center hover:shadow-xl transition-shadow hover:border border-white border-purple-800";
+    "bg-white dark:bg-grey-800 rounded-full place-items-center hover:shadow-xl transition-shadow hover:border border-purple-800";
 
   return (
     <section
