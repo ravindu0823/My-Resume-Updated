@@ -90,7 +90,7 @@ export function ResumeDocument({ content }: { content: Content }) {
 
       <section>
         <H2>Additional projects</H2>
-        <ul className="resume-compact">
+        <ul>
           {clientProjects.map((p) => (
             <li key={p.slug}>
               <strong>{p.title}</strong> <span className="resume-stack">({p.stack.join(", ")})</span>

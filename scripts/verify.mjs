@@ -21,11 +21,20 @@ const MEASURE = `(async () => {
   await new Promise(r => setTimeout(r, 400));
   const vw = document.documentElement.clientWidth;
   const visible = (el) => { const r = el.getBoundingClientRect(); const cs = getComputedStyle(el);
-    return r.width > 2 && r.height > 2 && cs.visibility !== "hidden" && cs.display !== "none" && !el.closest("[aria-hidden=true]"); };
+    return r.width > 2 && r.height > 2 && cs.visibility !== "hidden" && cs.display !== "none" && !el.closest("[aria-hidden=true]") && !inVisuallyHidden(el); };
+  // Screen-reader-only content (Tailwind sr-only: a clipped 1px box) is invisible by design.
+  function inVisuallyHidden(el) { for (let p = el; p; p = p.parentElement) { const r = p.getBoundingClientRect(); if (r.width <= 1 && r.height <= 1 && getComputedStyle(p).overflow === "hidden") return true; } return false; }
   const inScroller = (el) => { for (let p = el.parentElement; p; p = p.parentElement) { const o = getComputedStyle(p).overflowX; if (o === "auto" || o === "scroll") return true; } return false; };
   const name = (el) => el.tagName.toLowerCase() + (el.id ? "#" + el.id : "") + (el.className && typeof el.className === "string" ? "." + el.className.split(" ").slice(0, 2).join(".") : "") + " \\"" + (el.textContent || "").trim().slice(0, 40) + "\\"";
   const all = [...document.querySelectorAll("body *")].filter((el) => el instanceof HTMLElement && visible(el));
-  const clipped = all.filter((el) => { const cs = getComputedStyle(el); return cs.overflowX !== "visible" && cs.overflowX !== "auto" && cs.overflowX !== "scroll" && el.scrollWidth > el.clientWidth + 1 && !["PRE", "CODE"].includes(el.tagName); });
+  // Any box whose content is wider than the box, clipped or not (a visible overflow still spills
+  // over its neighbours). Intentional horizontal scrollers and code blocks are exempt.
+  // A swipe row bleeds into the page gutter on purpose (negative margin); its ancestors are exempt.
+  const hostsBleedingScroller = (el) => [...el.querySelectorAll("*")].some((d) => { const o = getComputedStyle(d).overflowX; if (o !== "auto" && o !== "scroll") return false; const a = el.getBoundingClientRect(), b = d.getBoundingClientRect(); return b.left < a.left - 1 || b.right > a.right + 1; });
+  const clipped = all.filter((el) => { const cs = getComputedStyle(el); return cs.display !== "inline" && cs.overflowX !== "auto" && cs.overflowX !== "scroll" && !inScroller(el) && el.scrollWidth > el.clientWidth + 1 && !["PRE", "CODE"].includes(el.tagName) && !hostsBleedingScroller(el); });
+  // Timeline dots must sit on the timeline's vertical line, not on the heading text beside it.
+  const offDots = [...document.querySelectorAll(".timeline-dot")].filter((d) => d.getBoundingClientRect().width > 0).filter((dot) => { const line = dot.closest("ol"); const r = line.getBoundingClientRect(); const x = r.left + parseFloat(getComputedStyle(line).borderLeftWidth) / 2; const d = dot.getBoundingClientRect(); return Math.abs(d.left + d.width / 2 - x) > 2; });
+  const brokenLabels = [...document.querySelectorAll("[aria-labelledby]")].filter((el) => el.getAttribute("aria-labelledby").split(" ").some((id) => !document.getElementById(id)));
   const beyond = all.filter((el) => !inScroller(el) && el.getBoundingClientRect().right > vw + 1);
   const targets = [...document.querySelectorAll("a, button, summary, [role=button]")].filter((el) => visible(el) && getComputedStyle(el).display !== "inline" && !inScroller(el))
     .filter((el) => { const r = el.getBoundingClientRect(); return r.width < 44 || r.height < 44; });
@@ -38,6 +47,8 @@ const MEASURE = `(async () => {
     beyondViewport: beyond.map(name).slice(0, 10),
     smallTargets: targets.map(name).slice(0, 10),
     missingSections: ${JSON.stringify(SECTIONS)}.filter((id) => !document.getElementById(id)),
+    brokenLabels: brokenLabels.map((el) => el.getAttribute("aria-labelledby")).slice(0, 10),
+    misplacedDots: offDots.map((d) => (d.closest("li")?.textContent || "").trim().slice(0, 30)),
     brokenImages: [...document.images].filter((i) => i.complete && i.naturalWidth === 0 && visible(i)).map((i) => i.src),
   };
 })()`;
@@ -84,7 +95,9 @@ try {
         report.runs.push(run);
         const fail = (what) => report.failures.push(`${path} ${width}px ${scheme}: ${what}`);
         if (m.docScroll) fail("page scrolls horizontally");
-        if (m.clipped.length) fail(`clipped text: ${m.clipped.join("; ")}`);
+        if (m.clipped.length) fail(`content wider than its box: ${m.clipped.join("; ")}`);
+        if (m.brokenLabels.length) fail(`aria-labelledby points at missing ids: ${m.brokenLabels.join("; ")}`);
+        if (m.misplacedDots.length) fail(`timeline dots off the line: ${m.misplacedDots.join("; ")}`);
         if (m.beyondViewport.length) fail(`beyond viewport: ${m.beyondViewport.join("; ")}`);
         if (m.smallTargets.length) fail(`touch targets under 44px: ${m.smallTargets.join("; ")}`);
         if (m.brokenImages.length) fail(`broken images: ${m.brokenImages.join(", ")}`);

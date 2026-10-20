@@ -6,7 +6,7 @@ export const openSource: OpenSource[] = [
     name: "frag-arena",
     href: "https://github.com/DFanso/frag-arena",
     summary:
-      "Browser-based 3D multiplayer FPS: server-side lag compensation, session-token reconnection, server-verified headshots, per-IP WebSocket rate limiting and spatial audio.",
+      "Browser-based 3D multiplayer FPS. My merged PRs added server-side lag compensation, session-token reconnection, server-verified headshots, per-IP WebSocket rate limiting and spatial audio.",
     proof: { label: "14 merged PRs", href: "https://github.com/DFanso/frag-arena/pulls?q=is%3Apr+author%3Aravindu0823+is%3Amerged" },
   },
   {

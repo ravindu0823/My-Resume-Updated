@@ -1,7 +1,7 @@
 import type { Featured, Project } from "./schema.ts";
 
-// Source: CV "Selected Projects" and "Additional Projects", the owner's live site (screenshots and
-// community projects), and public repositories. Client work is private, so each featured project
+// Source: CV "Selected Projects" and "Additional Projects", the owner's live site (community
+// projects), and public repositories. Project cards use generated covers (motif), not screenshots. Client work is private, so each featured project
 // carries an architecture diagram instead of a screenshot. A diagram names only the components the
 // CV names for that project.
 export const featured: Featured[] = [
@@ -226,6 +226,7 @@ export const featured: Featured[] = [
 export const projects: Project[] = [
   {
     slug: "crypto-gateway",
+    motif: "wallet",
     group: "client",
     title: "Multi-tenant crypto wallet & payment gateway",
     summary:
@@ -234,6 +235,7 @@ export const projects: Project[] = [
   },
   {
     slug: "payhere-gateway",
+    motif: "card",
     group: "client",
     title: "PayHere multi-tenant payment gateway",
     summary:
@@ -242,6 +244,7 @@ export const projects: Project[] = [
   },
   {
     slug: "consultation-marketplace",
+    motif: "market",
     group: "client",
     title: "Horoscope consultation marketplace",
     summary:
@@ -250,6 +253,7 @@ export const projects: Project[] = [
   },
   {
     slug: "games-platform",
+    motif: "game",
     group: "client",
     title: "Real-time multiplayer games platform",
     summary:
@@ -258,6 +262,7 @@ export const projects: Project[] = [
   },
   {
     slug: "couples-app",
+    motif: "heart",
     group: "client",
     title: "Couples lifestyle app backend",
     summary:
@@ -266,7 +271,7 @@ export const projects: Project[] = [
   },
   {
     slug: "zdump",
-    image: { src: "/img/zdump", width: 480, height: 231, alt: "Z-DUMP V2.0 fly-ash management screenshot" },
+    motif: "bolt",
     group: "client",
     title: "Z-DUMP V2.0",
     summary: "Fly-ash management system for CEB's Lakvijaya Power Plant on ASP.NET Core 8 and React (TypeScript).",
@@ -274,7 +279,7 @@ export const projects: Project[] = [
   },
   {
     slug: "inventory-ceb",
-    image: { src: "/img/inventory-ceb", width: 480, height: 326, alt: "Inventory management system screenshot" },
+    motif: "boxes",
     group: "client",
     title: "Inventory management system",
     summary: "Inventory management for CEB's Lakvijaya Power Plant on ASP.NET Core 8 and EF Core.",
@@ -282,7 +287,7 @@ export const projects: Project[] = [
   },
   {
     slug: "hms-kumudu",
-    image: { src: "/img/hms-kumudu", width: 480, height: 242, alt: "Kumudu Hospital management system screenshot" },
+    motif: "medical",
     group: "client",
     title: "Hospital management system",
     summary: "Hospital management for Kumudu Hospital, Matale, on ASP.NET Core and EF Core, deployed on Azure.",
@@ -290,7 +295,7 @@ export const projects: Project[] = [
   },
   {
     slug: "resper",
-    image: { src: "/img/resper", width: 480, height: 288, alt: "RESPER restaurant management screenshot" },
+    motif: "dining",
     group: "client",
     title: "RESPER restaurant management & POS",
     summary: "Orders, cashier, POS and kitchen management for Daiwa Lanka on Spring Boot, MySQL and React (TypeScript).",
@@ -298,7 +303,7 @@ export const projects: Project[] = [
   },
   {
     slug: "farmy",
-    image: { src: "/img/farmy", width: 480, height: 360, alt: "Farmy plant disease app screens" },
+    motif: "leaf",
     group: "public",
     title: "Farmy",
     summary: "Flutter app that identifies plant diseases from a photo and recommends treatments.",
@@ -307,7 +312,7 @@ export const projects: Project[] = [
   },
   {
     slug: "hotel-booking",
-    image: { src: "/img/hotel-booking", width: 480, height: 240, alt: "Hotel Room Booking System screenshot" },
+    motif: "bed",
     group: "public",
     title: "Hotel Room Booking System",
     summary: "MERN app with room booking, PayPal payments and admin/guest live chat.",
@@ -316,6 +321,7 @@ export const projects: Project[] = [
   },
   {
     slug: "job-tracker",
+    motif: "briefcase",
     group: "public",
     title: "Job Application Tracker",
     summary: "ASP.NET Core API with Identity auth and EF Core.",
@@ -324,7 +330,7 @@ export const projects: Project[] = [
   },
   {
     slug: "garbage-management",
-    image: { src: "/img/garbage-management", width: 480, height: 260, alt: "Garbage Management System screenshot" },
+    motif: "recycle",
     group: "public",
     title: "Garbage Management System",
     summary: "ASP.NET and SQL Server platform that coordinates garbage collection areas in Sri Lanka.",
@@ -333,6 +339,7 @@ export const projects: Project[] = [
   },
   {
     slug: "hospital-desktop",
+    motif: "medical",
     group: "public",
     title: "Hospital Management System (desktop)",
     summary: "C# desktop app on SQL Server for doctors, patients, rooms, billing and pharmacy.",
@@ -341,6 +348,7 @@ export const projects: Project[] = [
   },
   {
     slug: "learning-management",
+    motif: "book",
     group: "public",
     title: "Learning Management System",
     summary: "Android app for university students and lecturers on Java and Firebase: modules, coursework and marks.",
@@ -349,6 +357,7 @@ export const projects: Project[] = [
   },
   {
     slug: "movie-booking",
+    motif: "film",
     group: "public",
     title: "Movie Booking System",
     summary: "Android app on Java, Firebase and MySQL with seat selection, PayPal checkout and reviews.",
@@ -357,7 +366,7 @@ export const projects: Project[] = [
   },
   {
     slug: "sfd-2023",
-    image: { src: "/img/sfd-2023", width: 480, height: 480, alt: "Software Freedom Day Sri Lanka 2023 website" },
+    motif: "spark",
     group: "community",
     title: "Software Freedom Day Sri Lanka 2023",
     summary: "Event website for FOSS NSBM's Software Freedom Day 2023.",
@@ -366,7 +375,7 @@ export const projects: Project[] = [
   },
   {
     slug: "hackovate",
-    image: { src: "/img/hackovate", width: 480, height: 360, alt: "Hackovate Hacktoberfest 2023 website" },
+    motif: "code",
     group: "community",
     title: "Hackovate · Hacktoberfest 2023",
     summary: "Event website for FOSS NSBM's Hacktoberfest 2023.",
@@ -375,7 +384,7 @@ export const projects: Project[] = [
   },
   {
     slug: "technosphere",
-    image: { src: "/img/technosphere", width: 480, height: 241, alt: "Technosphere 2022 conference website" },
+    motif: "globe",
     group: "community",
     title: "Technosphere 2022",
     summary: "Website for FOSS NSBM's 2022 tech conference.",

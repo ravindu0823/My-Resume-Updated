@@ -8,11 +8,13 @@ function Timeline({ children }: { children: ReactNode }) {
   return <ol className="relative space-y-8 border-l border-line pl-6">{children}</ol>;
 }
 
+// Centred on the timeline's 1px line: the item starts 24px (pl-6) + 1px (border) right of it, so
+// the 12px dot sits at -(24 + 1 + 6 - 0.5)px. scripts/verify.mjs checks the alignment.
 function Dot() {
   return (
     <span
       aria-hidden="true"
-      className="absolute -left-[7px] mt-1.5 size-3 rounded-full bg-gradient-to-br from-violet to-azure ring-4 ring-bg"
+      className="timeline-dot absolute -left-[30.5px] mt-1.5 size-3 rounded-full bg-gradient-to-br from-violet to-azure ring-4 ring-bg"
     />
   );
 }

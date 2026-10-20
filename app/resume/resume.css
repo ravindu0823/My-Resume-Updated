@@ -126,15 +126,6 @@
   font-size: 9pt;
 }
 
-.resume-compact {
-  columns: 2;
-  column-gap: 14pt;
-}
-
-.resume-compact li {
-  break-inside: avoid;
-}
-
 .resume-skills {
   margin: 0;
 }

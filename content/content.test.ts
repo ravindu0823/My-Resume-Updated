@@ -20,7 +20,8 @@ test("every generated image is used, with the size the pipeline wrote", () => {
   const sizes: Record<string, { width: number; height: number }> = JSON.parse(
     readFileSync(join(import.meta.dirname, "_sources", "image-sizes.json"), "utf8"),
   );
-  const used = [content.profile.photo, ...content.projects.flatMap((p) => (p.image ? [p.image] : []))];
+  // Project cards use generated covers; the portrait is the only photo.
+  const used = [content.profile.photo];
   assert.deepEqual(used.map((i) => i.src.replace("/img/", "")).sort(), Object.keys(sizes).sort());
   for (const img of used) {
     const name = img.src.replace("/img/", "");

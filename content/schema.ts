@@ -49,13 +49,34 @@ export type Featured = {
   diagram: Diagram;
 };
 
+/** The domain glyph drawn on a project's generated cover (components/ui/ProjectCover.tsx). */
+export type Motif =
+  | "wallet"
+  | "card"
+  | "market"
+  | "game"
+  | "heart"
+  | "bolt"
+  | "boxes"
+  | "medical"
+  | "dining"
+  | "leaf"
+  | "bed"
+  | "briefcase"
+  | "recycle"
+  | "book"
+  | "film"
+  | "code"
+  | "globe"
+  | "spark";
+
 export type Project = {
   slug: string;
   title: string;
   summary: string;
   stack: string[];
   href?: string;
-  image?: Image;
+  motif: Motif;
   group: "client" | "public" | "community";
 };
 

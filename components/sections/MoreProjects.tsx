@@ -1,6 +1,6 @@
-import type { Project } from "@/content/schema.ts";
+import type { Project, StackGroup } from "@/content/schema.ts";
 import { Chip } from "@/components/ui/Chip.tsx";
-import { Picture } from "@/components/ui/Picture.tsx";
+import { ProjectCover } from "@/components/ui/ProjectCover.tsx";
 import { Section } from "@/components/ui/Section.tsx";
 
 const GROUPS: { group: Project["group"]; title: string }[] = [
@@ -9,14 +9,12 @@ const GROUPS: { group: Project["group"]; title: string }[] = [
   { group: "community", title: "Community" },
 ];
 
-function Card({ p }: { p: Project }) {
+function Card({ p, stack }: { p: Project; stack: StackGroup[] }) {
   return (
     <li className="flex w-[82%] shrink-0 snap-start flex-col overflow-hidden rounded-2xl border border-line bg-surface/70 sm:w-auto">
-      {p.image && (
-        <div className="aspect-[16/10] overflow-hidden border-b border-line bg-tile">
-          <Picture image={p.image} className="size-full object-cover object-top" />
-        </div>
-      )}
+      <div className="overflow-hidden border-b border-line">
+        <ProjectCover project={p} stack={stack} />
+      </div>
       <div className="flex flex-1 flex-col p-5">
         <h4 className="font-semibold tracking-tight">{p.title}</h4>
         <p className="mt-2 text-sm text-ink/85">{p.summary}</p>
@@ -37,7 +35,7 @@ function Card({ p }: { p: Project }) {
   );
 }
 
-export function MoreProjects({ projects }: { projects: Project[] }) {
+export function MoreProjects({ projects, stack }: { projects: Project[]; stack: StackGroup[] }) {
   return (
     <Section id="projects" eyebrow="Projects" title="More things I've built">
       <div className="space-y-12">
@@ -56,7 +54,7 @@ export function MoreProjects({ projects }: { projects: Project[] }) {
                 className="-mx-4 mt-5 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-px-4 px-4 pb-3 sm:mx-0 sm:grid sm:snap-none sm:grid-cols-2 sm:overflow-visible sm:px-0 sm:pb-0 lg:grid-cols-3"
               >
                 {items.map((p) => (
-                  <Card key={p.slug} p={p} />
+                  <Card key={p.slug} p={p} stack={stack} />
                 ))}
               </ul>
             </div>

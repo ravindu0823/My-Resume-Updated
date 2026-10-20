@@ -1,4 +1,7 @@
+import { existsSync } from "node:fs";
+import { join } from "node:path";
 import { content } from "@/content/index.ts";
+import { assertValidContent } from "@/content/validate.ts";
 import { Hero } from "@/components/hero/Hero.tsx";
 import { About } from "@/components/sections/About.tsx";
 import { Experience } from "@/components/sections/Experience.tsx";
@@ -10,6 +13,10 @@ import { SelectedWork } from "@/components/sections/SelectedWork.tsx";
 import { Stack } from "@/components/sections/Stack.tsx";
 import { Footer } from "@/components/site/Footer.tsx";
 import { TopBar } from "@/components/site/TopBar.tsx";
+
+// Runs while the page is prerendered, so invalid content (a banned word, a phone number, a missing
+// image) fails `next build` itself. Vercel deploys main without waiting for CI; this cannot be skipped.
+assertValidContent(content, { fileExists: (p) => existsSync(join(process.cwd(), "public", p)) });
 
 // Structured data for search engines: who this is, where they work and studied, and their profiles.
 function personJsonLd() {
@@ -45,7 +52,7 @@ export default function Home() {
         <SelectedWork items={content.featured} />
         <Experience jobs={content.experience} education={content.education} volunteering={content.volunteering} />
         <Stack groups={content.stack} />
-        <MoreProjects projects={content.projects} />
+        <MoreProjects projects={content.projects} stack={content.stack} />
         <OpenSource items={content.openSource} />
         <GithubActivity />
       </main>

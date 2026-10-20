@@ -40,7 +40,7 @@ function fixture(): Content {
         },
       },
     ],
-    projects: [{ slug: "tool", title: "Tool", summary: "A tool.", stack: ["Go"], group: "public", href: "https://github.com/x/tool" }],
+    projects: [{ slug: "tool", title: "Tool", summary: "A tool.", stack: ["Go"], group: "public", motif: "code", href: "https://github.com/x/tool" }],
     stack: [{ title: "Backend", caption: "core", items: [{ name: "C#", icon: "csharp" }] }],
     openSource: [{ name: "Thing", href: "https://github.com/x/thing", summary: "Fixes." }],
     volunteering: [{ org: "FOSS", role: "Lead", period: { start: "2022-03", end: "2024-02" }, summary: "Led." }],

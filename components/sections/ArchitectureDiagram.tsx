@@ -24,9 +24,27 @@ function labelLines(label: string, box: number): { lines: string[]; size: number
  * The project's architecture, drawn from its diagram spec. Below `md` it is a readable flow list:
  * an 800-unit SVG scaled into a phone-width card would set labels around 6px.
  */
+function FlowList({ diagram, title, className }: { diagram: Diagram; title: string; className: string }) {
+  const label = (id: string) => diagram.nodes.find((n) => n.id === id)!.label;
+  return (
+    <ol className={`space-y-2 ${className}`} aria-label={`${title} architecture`}>
+      {diagram.edges.map((e) => (
+        <li key={`${e.from}-${e.to}`} className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-line/70 bg-tile/50 px-3 py-2 text-sm">
+          <span>{label(e.from)}</span>
+          <span aria-hidden="true" className={e.async ? "text-cyan" : "text-muted"}>
+            {e.async ? "⇢" : "→"}
+          </span>
+          <span className="sr-only">{e.async ? "asynchronously to" : "to"}</span>
+          <span>{label(e.to)}</span>
+          {e.label && <span className="font-mono text-xs text-muted">({e.label})</span>}
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 export function ArchitectureDiagram({ diagram, slug, title }: { diagram: Diagram; slug: string; title: string }) {
   const layout = layoutDiagram(diagram);
-  const label = (id: string) => diagram.nodes.find((n) => n.id === id)!.label;
   const arrow = `arrow-${slug}`;
   const arrowAsync = `arrow-async-${slug}`;
 
@@ -39,20 +57,11 @@ export function ArchitectureDiagram({ diagram, slug, title }: { diagram: Diagram
           </span>
           Architecture · {diagram.nodes.length} components
         </summary>
-      <ol className="mt-2 space-y-2" aria-label={`${title} architecture`}>
-        {diagram.edges.map((e) => (
-          <li key={`${e.from}-${e.to}`} className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-line/70 bg-tile/50 px-3 py-2 text-sm">
-            <span>{label(e.from)}</span>
-            <span aria-hidden="true" className={e.async ? "text-cyan" : "text-muted"}>
-              {e.async ? "⇢" : "→"}
-            </span>
-            <span className="sr-only">{e.async ? "asynchronously to" : "to"}</span>
-            <span>{label(e.to)}</span>
-            {e.label && <span className="font-mono text-xs text-muted">({e.label})</span>}
-          </li>
-        ))}
-      </ol>
+        <FlowList diagram={diagram} title={title} className="mt-2" />
       </details>
+
+      {/* From md the drawing replaces the list visually; screen readers still get the flow. */}
+      <FlowList diagram={diagram} title={title} className="sr-only hidden md:block" />
 
       <svg
         viewBox={`-8 -8 ${layout.width + 16} ${layout.height + 16}`}

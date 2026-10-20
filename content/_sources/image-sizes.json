@@ -2,45 +2,5 @@
   "ravindu": {
     "width": 480,
     "height": 541
-  },
-  "sfd-2023": {
-    "width": 480,
-    "height": 480
-  },
-  "hackovate": {
-    "width": 480,
-    "height": 360
-  },
-  "technosphere": {
-    "width": 480,
-    "height": 241
-  },
-  "hotel-booking": {
-    "width": 480,
-    "height": 240
-  },
-  "farmy": {
-    "width": 480,
-    "height": 360
-  },
-  "resper": {
-    "width": 480,
-    "height": 288
-  },
-  "garbage-management": {
-    "width": 480,
-    "height": 260
-  },
-  "inventory-ceb": {
-    "width": 480,
-    "height": 326
-  },
-  "zdump": {
-    "width": 480,
-    "height": 231
-  },
-  "hms-kumudu": {
-    "width": 480,
-    "height": 242
   }
 }
