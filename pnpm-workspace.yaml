@@ -1,0 +1,4 @@
+# pnpm 11 blocks dependency build scripts unless they are listed here.
+# unrs-resolver (eslint import resolver) only verifies its prebuilt native binding; not needed.
+allowBuilds:
+  unrs-resolver: false

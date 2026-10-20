@@ -1,31 +1,87 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import "tailwindcss";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+/* Brand tokens, shared with the GitHub profile README (ravindu0823/ravindu0823, scripts/theme.mjs). */
+:root,
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0d1117;
+  --bg-to: #111a33;
+  --surface: #0f1629;
+  --tile: #161f36;
+  --border: #25314f;
+  --text: #e6edf3;
+  --muted: #8b98b8;
+  --violet: #a78bfa;
+  --azure: #38bdf8;
+  --cyan: #22d3ee;
+  --grid: #2a3657;
+}
 
-* {
-  box-sizing: border-box;
-  padding: 0;
-  margin: 0;
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #f7f9ff;
+  --bg-to: #e9f1ff;
+  --surface: #ffffff;
+  --tile: #f2f5fb;
+  --border: #d8dee9;
+  --text: #0f172a;
+  --muted: #57606a;
+  --violet: #6d28d9;
+  --azure: #0078d4;
+  --cyan: #0891b2;
+  --grid: #cdd7ea;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-bg-to: var(--bg-to);
+  --color-surface: var(--surface);
+  --color-tile: var(--tile);
+  --color-line: var(--border);
+  --color-ink: var(--text);
+  --color-muted: var(--muted);
+  --color-violet: var(--violet);
+  --color-azure: var(--azure);
+  --color-cyan: var(--cyan);
+  --color-grid: var(--grid);
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, "Cascadia Code", Consolas, monospace;
 }
 
 html {
-  scroll-behavior: smooth !important;
+  background: var(--bg);
+  color: var(--text);
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
 }
 
 body {
-  font-family: "Poppins", sans-serif;
+  margin: 0;
+  min-height: 100dvh;
+  background: var(--bg);
+  font-family: var(--font-sans);
+  text-rendering: optimizeLegibility;
 }
 
-::-webkit-scrollbar {
-  width: 0.5rem;
+::selection {
+  background: color-mix(in srgb, var(--violet) 35%, transparent);
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: #6565656a;
+:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+  border-radius: 6px;
 }
 
-.scroll-hide::-webkit-scrollbar {
-  display: none;
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
