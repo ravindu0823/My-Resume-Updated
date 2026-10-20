@@ -96,3 +96,60 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Hero motion: decoration only. The resting state is the finished state, so a renderer that
+   skips animation still shows the whole kicker and the whole mesh. */
+.kicker {
+  animation: kicker-type 1.6s steps(30, end) 0.2s both;
+}
+@keyframes kicker-type {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+.caret {
+  animation: caret-blink 1s steps(1) infinite;
+}
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+.mesh-flow {
+  animation: mesh-dash 1.2s linear infinite;
+}
+@keyframes mesh-dash {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+.mesh-pulse {
+  transform-origin: center;
+  transform-box: fill-box;
+  animation: mesh-pulse 2.6s ease-in-out infinite;
+}
+@keyframes mesh-pulse {
+  50% {
+    transform: scale(1.12);
+    opacity: 0.7;
+  }
+}
+.hero-grid {
+  background-image: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--grid) 70%, transparent) 1px, transparent 0);
+  background-size: 22px 22px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .packet,
+  .caret {
+    display: none;
+  }
+  .kicker,
+  .mesh-flow,
+  .mesh-pulse {
+    animation: none;
+  }
+}
