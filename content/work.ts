@@ -1,0 +1,375 @@
+import type { Featured, Project } from "./schema.ts";
+
+// Source: CV "Selected Projects" and "Additional Projects", the owner's live site (screenshots and
+// community projects), and public repositories. Client work is private, so each featured project
+// carries an architecture diagram instead of a screenshot. A diagram names only the components the
+// CV names for that project.
+export const featured: Featured[] = [
+  {
+    slug: "realtime-platform",
+    title: "Real-time content platform",
+    role: "Lead engineer · ~90% of 480+ commits",
+    summary:
+      "Feeds, 24-hour stories, real-time chat and live streaming on .NET 10 and Aspire, built for high-frequency fan-out.",
+    bullets: [
+      "CQRS read/write split on EF Core with read-replica fallback, Redis caching and compiled queries.",
+      "Three async lanes: Hangfire jobs, MassTransit on RabbitMQ, and in-process channels.",
+      "JWT and API-key auth, idempotency and rate-limiting middleware; multi-stage Azure DevOps CI/CD with gated production deploys.",
+    ],
+    stack: ["ASP.NET Core", "Aspire", "EF Core", "PostgreSQL", "Redis", "RabbitMQ", "Azure DevOps"],
+    diagram: {
+      nodes: [
+        { id: "clients", label: "Mobile & web", kind: "client", col: 0, row: 1 },
+        { id: "api", label: "ASP.NET Core API", kind: "service", col: 1, row: 1 },
+        { id: "bus", label: "RabbitMQ · MassTransit", kind: "queue", col: 1, row: 0 },
+        { id: "jobs", label: "Hangfire jobs", kind: "service", col: 2, row: 0 },
+        { id: "primary", label: "PostgreSQL primary", kind: "store", col: 2, row: 1 },
+        { id: "cache", label: "Redis cache", kind: "store", col: 1, row: 2 },
+        { id: "replica", label: "Read replica", kind: "store", col: 2, row: 2 },
+      ],
+      edges: [
+        { from: "clients", to: "api" },
+        { from: "api", to: "primary", label: "writes" },
+        { from: "api", to: "cache", label: "reads" },
+        { from: "api", to: "replica" },
+        { from: "primary", to: "replica", async: true },
+        { from: "api", to: "bus", label: "events", async: true },
+        { from: "bus", to: "jobs", async: true },
+      ],
+    },
+  },
+  {
+    slug: "agent-network",
+    title: "Agent network & commission engine",
+    role: "Core engineer",
+    summary:
+      "A multi-tenant platform with a 10-level agent hierarchy, an automated commission engine and a central identity hub for peer services.",
+    bullets: [
+      "10-level hierarchy on PostgreSQL ltree, with the commission engine computing payouts across it.",
+      "Central JWT and permission hub; WebAuthn passkeys, TOTP, refresh-token rotation and HMAC signing.",
+      "Memory-heavy imports run as a scale-to-zero Container Apps job fed by Service Bus; Bicep to Container Apps with static egress and blue/green APIM promote and rollback.",
+    ],
+    stack: [".NET 9", "Aspire", "PostgreSQL", "Service Bus", "Container Apps", "Bicep", "APIM"],
+    diagram: {
+      nodes: [
+        { id: "clients", label: "Clients", kind: "client", col: 0, row: 1 },
+        { id: "apim", label: "Azure APIM", kind: "service", col: 1, row: 1 },
+        { id: "agents", label: "Agents & commissions", kind: "service", col: 2, row: 1 },
+        { id: "db", label: "PostgreSQL · ltree", kind: "store", col: 3, row: 1 },
+        { id: "identity", label: "Identity hub", kind: "service", col: 2, row: 0 },
+        { id: "peers", label: "Peer services", kind: "external", col: 3, row: 0 },
+        { id: "bus", label: "Service Bus", kind: "queue", col: 2, row: 2 },
+        { id: "job", label: "Import job · ACA", kind: "service", col: 3, row: 2 },
+      ],
+      edges: [
+        { from: "clients", to: "apim" },
+        { from: "apim", to: "agents" },
+        { from: "agents", to: "db" },
+        { from: "agents", to: "identity", label: "JWT" },
+        { from: "identity", to: "peers", label: "permissions" },
+        { from: "agents", to: "bus", async: true },
+        { from: "bus", to: "job", async: true },
+      ],
+    },
+  },
+  {
+    slug: "wallet-ledger",
+    title: "Multi-currency wallet & double-entry ledger",
+    role: "Contributing engineer",
+    summary:
+      "Every deposit, transfer, FX conversion and withdrawal lands in an immutable double-entry ledger.",
+    bullets: [
+      "Exactly-once idempotency with AES-256-encrypted, time-bound keys.",
+      "HMAC-SHA256-signed partner APIs.",
+      "Serializable transactions with retries and optimistic concurrency to prevent double-spend.",
+    ],
+    stack: ["Clean Architecture", "EF Core", "PostgreSQL", "Redis", "Aspire", "Container Apps"],
+    diagram: {
+      nodes: [
+        { id: "partners", label: "Partner systems", kind: "external", col: 0, row: 1 },
+        { id: "api", label: "Wallet API", kind: "service", col: 1, row: 1 },
+        { id: "idem", label: "Idempotency keys", kind: "service", col: 1, row: 0 },
+        { id: "ledger", label: "Double-entry ledger", kind: "store", col: 2, row: 1 },
+        { id: "cache", label: "Redis", kind: "store", col: 1, row: 2 },
+      ],
+      edges: [
+        { from: "partners", to: "api", label: "HMAC-signed" },
+        { from: "api", to: "idem", label: "exactly-once" },
+        { from: "api", to: "ledger", label: "Serializable" },
+        { from: "api", to: "cache" },
+      ],
+    },
+  },
+  {
+    slug: "settlement-platform",
+    title: "Real-time event data & settlement platform",
+    role: "Lead backend engineer",
+    summary:
+      "Ingests live event data from a third-party feed and moves money through an external wallet provider, with an automated settlement engine.",
+    bullets: [
+      "Clean Api / Core / Infrastructure architecture on ASP.NET Core 9 with EF Core and PostgreSQL.",
+      "Idempotent transfers: stable reference IDs, HMAC-signed callbacks, refund, rollback and retry paths.",
+      "Multi-tenant model behind a JWT-secured admin console; Docker and GitHub Actions to GHCR and Dokploy, with Next.js 15 / React 19 frontends.",
+    ],
+    stack: ["ASP.NET Core 9", "PostgreSQL", "Next.js", "GitHub Actions", "Dokploy"],
+    diagram: {
+      nodes: [
+        { id: "feed", label: "Event data feed", kind: "external", col: 0, row: 1 },
+        { id: "api", label: "ASP.NET Core 9 API", kind: "service", col: 1, row: 1 },
+        { id: "engine", label: "Settlement engine", kind: "service", col: 2, row: 1 },
+        { id: "db", label: "PostgreSQL", kind: "store", col: 3, row: 1 },
+        { id: "admin", label: "Admin console", kind: "client", col: 1, row: 0 },
+        { id: "wallet", label: "Wallet provider", kind: "external", col: 2, row: 2 },
+      ],
+      edges: [
+        { from: "feed", to: "api", label: "live data" },
+        { from: "admin", to: "api", label: "JWT" },
+        { from: "api", to: "engine" },
+        { from: "engine", to: "db" },
+        { from: "engine", to: "wallet", label: "signed callbacks" },
+      ],
+    },
+  },
+  {
+    slug: "api-template",
+    title: ".NET 10 API platform template",
+    role: "Sole author",
+    summary:
+      "A dotnet new template that scaffolds a production-ready Web API in one command, used across the team.",
+    bullets: [
+      "Clean Architecture with JWT refresh-token rotation and family revocation.",
+      "EF Core 10 on PostgreSQL with audit and slow-query interceptors; Redis, Hangfire and SignalR wired in.",
+      "Serilog and OpenTelemetry out of the box, orchestrated with .NET Aspire.",
+    ],
+    stack: [".NET 10", "EF Core 10", "PostgreSQL", "Redis", "Aspire", "OpenTelemetry"],
+    diagram: {
+      nodes: [
+        { id: "cli", label: "dotnet new", kind: "client", col: 0, row: 1 },
+        { id: "api", label: "Web API · JWT", kind: "service", col: 1, row: 1 },
+        { id: "app", label: "Application", kind: "service", col: 2, row: 1 },
+        { id: "infra", label: "Infrastructure", kind: "service", col: 3, row: 1 },
+        { id: "otel", label: "Serilog · OTel", kind: "external", col: 1, row: 0 },
+        { id: "db", label: "PostgreSQL · EF Core", kind: "store", col: 3, row: 2 },
+        { id: "redis", label: "Redis · Hangfire", kind: "store", col: 2, row: 2 },
+      ],
+      edges: [
+        { from: "cli", to: "api", label: "scaffolds" },
+        { from: "api", to: "app" },
+        { from: "app", to: "infra" },
+        { from: "api", to: "otel", async: true },
+        { from: "infra", to: "db" },
+        { from: "infra", to: "redis" },
+      ],
+    },
+  },
+  {
+    slug: "resilienceos",
+    title: "ResilienceOS",
+    role: "Personal project",
+    summary:
+      "A climate-resilience platform of six event-driven .NET 10 services on Aspire: weather ingestion, ML.NET risk predictions and real-time alerts.",
+    bullets: [
+      "CQRS vertical slices with MediatR and FluentValidation; Azure Service Bus with dead-lettering and Redis-backed idempotency.",
+      "PostGIS and TimescaleDB for geospatial time series.",
+      "Unit, TestContainers integration and NetArchTest architecture tests; Helm and Flagger canary deploys on Kubernetes.",
+    ],
+    stack: [".NET 10", "Aspire", "ML.NET", "Service Bus", "TimescaleDB", "Kubernetes"],
+    diagram: {
+      nodes: [
+        { id: "feeds", label: "Weather feeds", kind: "external", col: 0, row: 1 },
+        { id: "ingest", label: "Ingestion service", kind: "service", col: 1, row: 1 },
+        { id: "store", label: "PostGIS · TimescaleDB", kind: "store", col: 1, row: 0 },
+        { id: "bus", label: "Service Bus · DLQ", kind: "queue", col: 2, row: 1 },
+        { id: "risk", label: "Risk model · ML.NET", kind: "service", col: 3, row: 1 },
+        { id: "alerts", label: "Alerts · SignalR", kind: "service", col: 3, row: 2 },
+        { id: "clients", label: "Clients", kind: "client", col: 2, row: 2 },
+      ],
+      edges: [
+        { from: "feeds", to: "ingest" },
+        { from: "ingest", to: "store" },
+        { from: "ingest", to: "bus", async: true },
+        { from: "bus", to: "risk", async: true },
+        { from: "risk", to: "alerts" },
+        { from: "alerts", to: "clients", label: "real-time" },
+      ],
+    },
+  },
+  {
+    slug: "musify",
+    title: "Musify",
+    role: "Final-year project",
+    summary: "Finds musical notes and chords in an uploaded song using FFT and a Bi-LSTM-CRF model.",
+    bullets: [
+      "Python model and data pipeline (FFT features, Bi-LSTM-CRF, TensorFlow).",
+      "React / Next.js frontend over a Node.js and Express API with MongoDB.",
+    ],
+    stack: ["Python", "TensorFlow", "Next.js", "Node.js", "MongoDB"],
+    repo: "https://github.com/ravindu0823/Note-Prediction-Web-Application",
+    diagram: {
+      nodes: [
+        { id: "browser", label: "Browser", kind: "client", col: 0, row: 1 },
+        { id: "web", label: "Next.js app", kind: "service", col: 1, row: 1 },
+        { id: "api", label: "Express API", kind: "service", col: 2, row: 1 },
+        { id: "db", label: "MongoDB", kind: "store", col: 3, row: 1 },
+        { id: "model", label: "Bi-LSTM-CRF model", kind: "service", col: 2, row: 2 },
+      ],
+      edges: [
+        { from: "browser", to: "web", label: "upload" },
+        { from: "web", to: "api" },
+        { from: "api", to: "db" },
+        { from: "api", to: "model", label: "notes & chords" },
+      ],
+    },
+  },
+];
+
+export const projects: Project[] = [
+  {
+    slug: "crypto-gateway",
+    group: "client",
+    title: "Multi-tenant crypto wallet & payment gateway",
+    summary:
+      ".NET 9 API that provisions self-custody HD wallets on BSC, Ethereum and Tron via Tatum.io, with AES-256-GCM key encryption and HMAC-signed deposit webhooks.",
+    stack: [".NET 9", "Tatum.io", "AES-256-GCM"],
+  },
+  {
+    slug: "payhere-gateway",
+    group: "client",
+    title: "PayHere multi-tenant payment gateway",
+    summary:
+      ".NET 9 Minimal API that routes payments for many client sites through one merchant account, with hashed API keys and signed webhook fan-out.",
+    stack: [".NET 9", "Minimal APIs", "PayHere"],
+  },
+  {
+    slug: "consultation-marketplace",
+    group: "client",
+    title: "Horoscope consultation marketplace",
+    summary:
+      "Two-sided marketplace on .NET 9 (Clean Architecture) and Next.js 16 with config-selectable payment, storage and video providers.",
+    stack: [".NET 9", "Next.js 16", "Clean Architecture"],
+  },
+  {
+    slug: "games-platform",
+    group: "client",
+    title: "Real-time multiplayer games platform",
+    summary:
+      "TypeScript monorepo (Fastify, WebSocket, React 18 PWA) hosting 24 games behind one pluggable game-engine SDK. One of ~6 contributors.",
+    stack: ["TypeScript", "Fastify", "WebSocket", "React"],
+  },
+  {
+    slug: "couples-app",
+    group: "client",
+    title: "Couples lifestyle app backend",
+    summary:
+      ".NET 10 Clean Architecture with Aspire: Stripe subscriptions, a Redis circuit-breaker cache and Firebase push notifications.",
+    stack: [".NET 10", "Aspire", "Stripe", "Redis"],
+  },
+  {
+    slug: "zdump",
+    group: "client",
+    title: "Z-DUMP V2.0",
+    summary: "Fly-ash management system for CEB's Lakvijaya Power Plant on ASP.NET Core 8 and React (TypeScript).",
+    stack: ["ASP.NET Core 8", "React", "SQL Server"],
+  },
+  {
+    slug: "inventory-ceb",
+    group: "client",
+    title: "Inventory management system",
+    summary: "Inventory management for CEB's Lakvijaya Power Plant on ASP.NET Core 8 and EF Core.",
+    stack: ["ASP.NET Core 8", "EF Core", "SQL Server"],
+  },
+  {
+    slug: "hms-kumudu",
+    group: "client",
+    title: "Hospital management system",
+    summary: "Hospital management for Kumudu Hospital, Matale, on ASP.NET Core and EF Core, deployed on Azure.",
+    stack: ["ASP.NET Core", "EF Core", "Azure"],
+  },
+  {
+    slug: "resper",
+    group: "client",
+    title: "RESPER restaurant management & POS",
+    summary: "Orders, cashier, POS and kitchen management for Daiwa Lanka on Spring Boot, MySQL and React (TypeScript).",
+    stack: ["Spring Boot", "MySQL", "React"],
+  },
+  {
+    slug: "farmy",
+    group: "public",
+    title: "Farmy",
+    summary: "Flutter app that identifies plant diseases from a photo and recommends treatments.",
+    stack: ["Flutter", "Dart", "Firebase", "YOLO"],
+    href: "https://github.com/ravindu0823/Farmy",
+  },
+  {
+    slug: "hotel-booking",
+    group: "public",
+    title: "Hotel Room Booking System",
+    summary: "MERN app with room booking, PayPal payments and admin/guest live chat.",
+    stack: ["React", "Node.js", "Express", "MongoDB"],
+    href: "https://github.com/ravindu0823/Hotel-Room-Booking-System",
+  },
+  {
+    slug: "job-tracker",
+    group: "public",
+    title: "Job Application Tracker",
+    summary: "ASP.NET Core API with Identity auth and EF Core.",
+    stack: ["ASP.NET Core", "EF Core", "Identity"],
+    href: "https://github.com/ravindu0823/Job-Application-Tracker",
+  },
+  {
+    slug: "garbage-management",
+    group: "public",
+    title: "Garbage Management System",
+    summary: "ASP.NET and SQL Server platform that coordinates garbage collection areas in Sri Lanka.",
+    stack: ["ASP.NET", "C#", "SQL Server"],
+    href: "https://github.com/ravindu0823/Garbage-Management-System",
+  },
+  {
+    slug: "hospital-desktop",
+    group: "public",
+    title: "Hospital Management System (desktop)",
+    summary: "C# desktop app on SQL Server for doctors, patients, rooms, billing and pharmacy.",
+    stack: ["C#", ".NET Framework", "SQL Server"],
+    href: "https://github.com/ravindu0823/Hospital-Management-System",
+  },
+  {
+    slug: "learning-management",
+    group: "public",
+    title: "Learning Management System",
+    summary: "Android app for university students and lecturers on Java and Firebase: modules, coursework and marks.",
+    stack: ["Java", "Android", "Firebase"],
+    href: "https://github.com/ravindu0823/Learning-Management-System",
+  },
+  {
+    slug: "movie-booking",
+    group: "public",
+    title: "Movie Booking System",
+    summary: "Android app on Java, Firebase and MySQL with seat selection, PayPal checkout and reviews.",
+    stack: ["Java", "Android", "Firebase"],
+    href: "https://github.com/ravindu0823/Movie-Booking-System",
+  },
+  {
+    slug: "sfd-2023",
+    group: "community",
+    title: "Software Freedom Day Sri Lanka 2023",
+    summary: "Event website for FOSS NSBM's Software Freedom Day 2023.",
+    stack: ["React", "TypeScript", "Next.js"],
+    href: "https://github.com/fossnsbm/sfd2023-web",
+  },
+  {
+    slug: "hackovate",
+    group: "community",
+    title: "Hackovate · Hacktoberfest 2023",
+    summary: "Event website for FOSS NSBM's Hacktoberfest 2023.",
+    stack: ["React", "JavaScript", "Vite"],
+    href: "https://github.com/fossnsbm/hackovate-web",
+  },
+  {
+    slug: "technosphere",
+    group: "community",
+    title: "Technosphere 2022",
+    summary: "Website for FOSS NSBM's 2022 tech conference.",
+    stack: ["React", "JavaScript", "Vite"],
+    href: "https://github.com/fossnsbm/technosphere-web",
+  },
+];
