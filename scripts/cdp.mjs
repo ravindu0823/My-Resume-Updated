@@ -29,16 +29,20 @@ export function findBrowser() {
 
 /** Opens one headless page and hands `fn` the protocol helpers: send, goto, on(method, listener). */
 export async function withPage(fn) {
+  const exe = findBrowser();
   const profile = mkdtempSync(join(tmpdir(), "cdp-"));
   // Port 0: the browser picks a free port and prints the endpoint, so parallel runs never collide.
   const proc = spawn(
-    findBrowser(),
+    exe,
     ["--headless=new", "--remote-debugging-port=0", `--user-data-dir=${profile}`, "--no-first-run", "--no-default-browser-check", "--disable-gpu", "about:blank"],
     { stdio: ["ignore", "ignore", "pipe"] },
   );
+  const exited = new Promise((resolve) => proc.once("exit", resolve));
   try {
     const wsBrowser = await new Promise((resolve, reject) => {
       let err = "";
+      // A wrong BROWSER path surfaces here as an error event, not as an uncaught crash.
+      proc.once("error", (e) => reject(new Error(`could not start ${exe}: ${e.message}`)));
       const timer = setTimeout(() => reject(new Error(`browser did not start: ${err.slice(-400)}`)), 20000);
       proc.stderr.on("data", (d) => {
         err += d;
@@ -71,12 +75,20 @@ export async function withPage(fn) {
         for (const l of listeners) l(m);
       }
     });
+    // Every protocol call and page load has a deadline, so a hung browser fails the run instead
+    // of hanging it.
+    const within = (promise, ms, what) =>
+      Promise.race([promise, new Promise((_, reject) => setTimeout(() => reject(new Error(`${what} timed out after ${ms} ms`)), ms).unref())]);
     const send = (method, params = {}) =>
-      new Promise((resolve, reject) => {
-        const i = ++id;
-        pending.set(i, { resolve, reject });
-        ws.send(JSON.stringify({ id: i, method, params }));
-      });
+      within(
+        new Promise((resolve, reject) => {
+          const i = ++id;
+          pending.set(i, { resolve, reject });
+          ws.send(JSON.stringify({ id: i, method, params }));
+        }),
+        60000,
+        method,
+      );
     const once = (method) =>
       new Promise((resolve) => {
         const l = (m) => {
@@ -91,7 +103,7 @@ export async function withPage(fn) {
       await send("Page.enable");
       const loaded = once("Page.loadEventFired");
       await send("Page.navigate", { url });
-      await loaded;
+      await within(loaded, 60000, `loading ${url.slice(0, 80)}`);
       await send("Runtime.evaluate", { expression: "document.fonts.ready.then(() => true)", awaitPromise: true });
     };
     const on = (method, listener) => listeners.add((m) => m.method === method && listener(m.params));
@@ -99,11 +111,14 @@ export async function withPage(fn) {
     ws.close();
     return result;
   } finally {
+    // Wait for the browser to exit before deleting its profile: on Windows it holds the files
+    // until then, and deleting early silently leaked ~130 MB per run into %TEMP%.
     proc.kill();
+    await Promise.race([exited, new Promise((resolve) => setTimeout(resolve, 10000).unref())]);
     try {
-      rmSync(profile, { recursive: true, force: true, maxRetries: 5, retryDelay: 200 });
-    } catch {
-      // The browser may still hold the profile on Windows for a moment; it is a temp dir.
+      rmSync(profile, { recursive: true, force: true, maxRetries: 10, retryDelay: 300 });
+    } catch (e) {
+      console.warn(`could not remove temp browser profile ${profile}: ${e.message}`);
     }
   }
 }

@@ -21,14 +21,14 @@ node scripts/verify.mjs     # after a build: measure out/ at 320/390/1280 in bot
 node scripts/verify.mjs https://<preview-url>   # the same checks against a deployed URL
 ```
 
-`pdf`, `og` and `verify` drive a headless Chromium (Edge on this machine, where Chrome is not installed) over CDP with Node built-ins (`scripts/cdp.mjs`). Set `BROWSER` to override the executable.
+`pdf`, `og` and `verify` drive a headless Chromium (Edge on this machine, where Chrome is not installed) over CDP with Node built-ins (`scripts/cdp.mjs`). They delete its temp profile after it exits, and every call has a timeout. Set `BROWSER` to override the executable.
 
 ## How it fits together
 
 - **All content is typed data in `content/`**, typed by `content/schema.ts` and exported from `content/index.ts`. Components only render it. To change what the site says, edit `content/*.ts`, never JSX.
-- **The validator is the guardrail.** `content/validate.ts` runs in `pnpm test` and checks every string and structure. It fails on:
-  - gambling vocabulary (`BANNED_WORDS`);
-  - anything that looks like a phone number;
+- **The validator is the guardrail.** `content/validate.ts` runs in `pnpm test`, and also at module scope in `app/page.tsx`, so `next build` itself fails (Vercel never waits for CI). It checks every string and structure, and fails on:
+  - gambling vocabulary (`BANNED_WORDS`): exact `bet`/`odds`, plus stems such as `casino*`, `wager*`, `gambl*`, `lotteries`, `sportsbook` and `igaming`;
+  - anything that looks like a phone number, including `(071) 010-1234` and `071.010.1234`;
   - empty text;
   - links that aren't `https:` or `mailto:`;
   - bad `YYYY-MM` periods;
@@ -41,12 +41,13 @@ node scripts/verify.mjs https://<preview-url>   # the same checks against a depl
   - No phone number anywhere, because the PDF is public. The schema has no phone field.
   - No contact form and no backend. Contact is links only.
 - **The resume PDF and the site cannot drift apart.**
-  - `lib/content-hash.mjs` hashes `content/*.ts` and `components/resume/*.tsx`.
+  - `lib/content-hash.mjs` hashes `content/*.ts`, `components/resume/*.tsx`, `app/resume/page.tsx`, `app/resume/resume.css` and `lib/format.ts` (`SOURCES`).
   - `pnpm pdf` writes that hash to `public/resume.pdf.json`.
   - `pnpm build` runs `scripts/check-pdf.mjs` first and fails with "content changed; run pnpm pdf" if they differ.
-  - So any content or resume-template edit is followed by `pnpm pdf`, and both files are committed.
+  - So any edit to those files is followed by `pnpm pdf`, and both files are committed.
 - **Images.**
-  - `content/_sources/images.json` lists every source image. `pnpm images` writes `<name>@1x|@2x.avif|.webp` to `public/img/` and their sizes to `content/_sources/image-sizes.json`.
+  - The only photo is the portrait. `content/_sources/images.json` lists it, and `pnpm images` writes `<name>@1x|@2x.avif|.webp` to `public/img/` and the sizes to `content/_sources/image-sizes.json`.
+  - Project cards have no screenshots: `components/ui/ProjectCover.tsx` draws a generated, theme-aware cover from the project's `motif` (a domain glyph), its stack logos (`lib/icons.ts` maps stack names to the vendored devicons) and its group. To add a domain, add a glyph to `GLYPHS` and a value to the `Motif` type.
   - A test makes the content's `width`/`height` match those sizes.
   - `Image.src` in content is a base path (`/img/name`); `components/ui/Picture.tsx` builds the sources.
   - Nothing is hotlinked, except the GitHub stats and snake SVGs. Those come from the profile repo's `output` branch (`ravindu0823/ravindu0823`), which rebuilds them twice a day.
@@ -68,8 +69,11 @@ Build at 390px first and widen with `sm:`/`md:`/`lg:`.
 - There is no horizontal page scroll at 320px. Project groups are intentional swipe rows below `sm`.
 - Never fix a narrow layout by shrinking the root font.
 
-After UI changes, run `pnpm build && node scripts/verify.mjs`. It must exit 0.
+After UI changes, run `pnpm build && node scripts/verify.mjs`. It must exit 0. Besides scroll and touch targets, it flags any box narrower than its content (outside intentional swipe rows), `aria-labelledby` pointing at missing ids, and timeline dots that are not centred on their line. Elements with class `timeline-dot` are checked, so keep that class on the dot.
 
 ## Deploy
+
+- `pnpm-workspace.yaml` lists `packages: ["."]` because pnpm 9 refuses the file without it. Vercel may pick pnpm 9 from `lockfileVersion: '9.0'` when Corepack is off.
+- `engines.node` is `>=22.18.0`.
 
 Push a branch and check its Vercel preview with `node scripts/verify.mjs <preview-url>`. Then merge to `main`. Rollback: promote the previous deployment in Vercel, or revert the merge. The old Firebase and SendGrid environment variables on the Vercel project are no longer used.

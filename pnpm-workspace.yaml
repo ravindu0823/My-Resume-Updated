@@ -1,4 +1,9 @@
-# pnpm 11 blocks dependency build scripts unless they are listed here.
+# A single-package workspace. pnpm 9 rejects this file without `packages` (Vercel may pick pnpm 9
+# from lockfileVersion 9.0 when Corepack is off), so the root is listed explicitly.
+packages:
+  - "."
+
+# pnpm 10+ blocks dependency build scripts unless they are listed here; older pnpm ignores this.
 # unrs-resolver (eslint import resolver) only verifies its prebuilt native binding; not needed.
 allowBuilds:
   unrs-resolver: false
