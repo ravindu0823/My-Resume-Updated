@@ -67,6 +67,19 @@ test("bans gambling vocabulary as whole words", () => {
   assert.equal(errorsFor((c) => (c.projects[0]!.summary = "alphabet soup, bettering things")), "");
 });
 
+test("bans plural and close forms of the gambling vocabulary", () => {
+  for (const word of ["casinos", "wagering", "jackpots", "lotteries", "gambler", "sportsbook", "iGaming"]) {
+    assert.match(errorsFor((c) => (c.projects[0]!.summary = `A ${word} platform`)), /banned word/, word);
+  }
+  assert.equal(errorsFor((c) => (c.projects[0]!.summary = "Better tooling, alphabetical betas")), "");
+});
+
+test("catches phone numbers written with brackets or dots", () => {
+  for (const phone of ["(071) 010-1234", "071.010.1234", "+00 (0)00 000 0000"]) {
+    assert.match(errorsFor((c) => (c.profile.location = `Call ${phone}`)), /looks like a phone number/, phone);
+  }
+});
+
 test("rejects non-https links", () => {
   assert.match(errorsFor((c) => (c.projects[0]!.href = "http://example.com")), /link must be https: or mailto:/);
   assert.match(errorsFor((c) => (c.profile.links[0]!.href = "javascript:alert(1)")), /link must be https: or mailto:/);

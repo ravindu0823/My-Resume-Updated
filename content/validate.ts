@@ -2,17 +2,20 @@ import type { Content, Diagram } from "./schema.ts";
 
 // Owner ruling 2026-10-21: client work (747 Live) is described neutrally, never in gambling
 // terms. Checked here, in the build, so the wording cannot drift back in through an edit.
+// Exact words where a stem would catch innocent text (bet: better, betas), stems where plurals
+// and inflections matter (casinos, wagering, lotteries, gambler).
 export const BANNED_WORDS = [
-  "casino",
-  "betting",
   "bet",
   "bets",
+  "betting",
   "odds",
-  "gambling",
-  "gamble",
-  "wager",
-  "lottery",
-  "jackpot",
+  "casino[a-z]*",
+  "wager[a-z]*",
+  "gambl[a-z]*",
+  "lotter(?:y|ies)",
+  "jackpot[a-z]*",
+  "sportsbook[a-z]*",
+  "igaming",
 ] as const;
 
 const BANNED = new RegExp(`\\b(${BANNED_WORDS.join("|")})\\b`, "i");
@@ -77,7 +80,8 @@ function checkText(s: string, path: string, errors: string[]): void {
   const banned = BANNED.exec(s);
   if (banned) errors.push(`banned word "${banned[1]!.toLowerCase()}" at ${path}`);
   // ISO dates (2026-10-21) and month ranges are digit runs too; they are not phone numbers.
-  if (PHONE.test(s.replace(/\b\d{4}-\d{2}(?:-\d{2})?\b/g, ""))) errors.push(`looks like a phone number at ${path}`);
+  // Brackets and dots separate digits in written numbers too: (071) 010-1234, 071.010.1234.
+  if (PHONE.test(s.replace(/[().]/g, " ").replace(/\b\d{4}-\d{2}(?:-\d{2})?\b/g, ""))) errors.push(`looks like a phone number at ${path}`);
 }
 
 function checkUrl(href: string, path: string, errors: string[]): void {
