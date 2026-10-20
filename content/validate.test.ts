@@ -3,7 +3,7 @@ import { test } from "node:test";
 import type { Content } from "./schema.ts";
 import { assertValidContent, validateContent } from "./validate.ts";
 
-const allFiles = { fileExists: () => true };
+const allFiles: { fileExists: (publicPath: string) => boolean } = { fileExists: () => true };
 
 function fixture(): Content {
   return {
