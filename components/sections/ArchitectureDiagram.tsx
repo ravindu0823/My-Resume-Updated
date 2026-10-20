@@ -32,7 +32,14 @@ export function ArchitectureDiagram({ diagram, slug, title }: { diagram: Diagram
 
   return (
     <figure className="mt-5">
-      <ol className="space-y-2 md:hidden" aria-label={`${title} architecture`}>
+      <details className="group md:hidden">
+        <summary className="inline-flex min-h-11 cursor-pointer list-none items-center gap-2 text-sm font-medium text-azure [&::-webkit-details-marker]:hidden">
+          <span className="transition-transform group-open:rotate-90" aria-hidden="true">
+            ▸
+          </span>
+          Architecture · {diagram.nodes.length} components
+        </summary>
+      <ol className="mt-2 space-y-2" aria-label={`${title} architecture`}>
         {diagram.edges.map((e) => (
           <li key={`${e.from}-${e.to}`} className="flex flex-wrap items-center gap-x-2 gap-y-1 rounded-xl border border-line/70 bg-tile/50 px-3 py-2 text-sm">
             <span>{label(e.from)}</span>
@@ -45,6 +52,7 @@ export function ArchitectureDiagram({ diagram, slug, title }: { diagram: Diagram
           </li>
         ))}
       </ol>
+      </details>
 
       <svg
         viewBox={`-8 -8 ${layout.width + 16} ${layout.height + 16}`}
