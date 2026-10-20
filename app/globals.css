@@ -1,5 +1,8 @@
 @import "tailwindcss";
 
+/* `dark:` follows the data-theme attribute set before first paint, not the OS setting. */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /* Brand tokens, shared with the GitHub profile README (ravindu0823/ravindu0823, scripts/theme.mjs). */
 :root,
 :root[data-theme="dark"] {
@@ -32,7 +35,15 @@
   --grid: #cdd7ea;
 }
 
+/* Call-to-action gradient: dark enough in both themes for white text to pass WCAG AA. */
+:root {
+  --cta-from: #6d28d9;
+  --cta-to: #0369a1;
+}
+
 @theme inline {
+  --color-cta-from: var(--cta-from);
+  --color-cta-to: var(--cta-to);
   --color-bg: var(--bg);
   --color-bg-to: var(--bg-to);
   --color-surface: var(--surface);
