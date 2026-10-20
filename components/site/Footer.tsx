@@ -42,7 +42,7 @@ export function Footer({ profile, updated }: { profile: Profile; updated: string
                 className="flex min-h-11 items-center gap-2.5 rounded-xl border border-line/70 px-3 text-sm text-muted transition-colors hover:border-cyan hover:text-ink"
               >
                 <SocialIcon kind={l.kind} className="size-4 shrink-0" />
-                <span className="truncate">{l.label}</span>
+                <span className="leading-tight break-words">{l.label}</span>
               </a>
             </li>
           ))}

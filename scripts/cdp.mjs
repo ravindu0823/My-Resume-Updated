@@ -27,7 +27,8 @@ export function findBrowser() {
   throw new Error("No Chromium-family browser found; set BROWSER to its executable path");
 }
 
-async function withPage(fn) {
+/** Opens one headless page and hands `fn` the protocol helpers: send, goto, on(method, listener). */
+export async function withPage(fn) {
   const profile = mkdtempSync(join(tmpdir(), "cdp-"));
   // Port 0: the browser picks a free port and prints the endpoint, so parallel runs never collide.
   const proc = spawn(
@@ -93,7 +94,8 @@ async function withPage(fn) {
       await loaded;
       await send("Runtime.evaluate", { expression: "document.fonts.ready.then(() => true)", awaitPromise: true });
     };
-    const result = await fn({ send, goto });
+    const on = (method, listener) => listeners.add((m) => m.method === method && listener(m.params));
+    const result = await fn({ send, goto, on });
     ws.close();
     return result;
   } finally {

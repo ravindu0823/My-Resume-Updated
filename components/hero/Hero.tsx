@@ -14,16 +14,13 @@ export function Hero({ profile }: { profile: Profile }) {
   const icons = [link("email"), link("linkedin"), link("github")];
 
   return (
-    <section id="top" aria-labelledby="hero-title" className="relative overflow-hidden">
-      <div aria-hidden="true" className="hero-grid pointer-events-none absolute inset-0 opacity-60" />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -top-40 -left-32 size-[28rem] rounded-full bg-violet/20 blur-3xl"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-40 -bottom-48 size-[30rem] rounded-full bg-azure/15 blur-3xl"
-      />
+    <section id="top" aria-labelledby="hero-title" className="relative">
+      {/* Decoration lives in its own clipped layer, so the section never clips real content. */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
+        <div className="hero-grid absolute inset-0 opacity-60" />
+        <div className="absolute -top-40 -left-32 size-[28rem] rounded-full bg-violet/20 blur-3xl" />
+        <div className="absolute -right-40 -bottom-48 size-[30rem] rounded-full bg-azure/15 blur-3xl" />
+      </div>
       <div className="relative mx-auto grid w-full max-w-5xl gap-10 px-4 pt-10 pb-14 sm:px-6 sm:pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:pt-24 lg:pb-20">
         <div>
           <p className="font-mono text-sm text-cyan">
