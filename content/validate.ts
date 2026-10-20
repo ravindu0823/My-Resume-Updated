@@ -28,6 +28,13 @@ export function validateContent(c: Content, opts: Options): string[] {
   const errors: string[] = [];
   walk(c, "", errors, opts);
   c.featured.forEach((f, i) => checkDiagram(f.diagram, `featured[${i}].diagram`, errors));
+  c.stack.forEach((g, gi) =>
+    g.items.forEach((item, ii) => {
+      if (item.icon && !opts.fileExists(`/icons/${item.icon}.svg`)) {
+        errors.push(`missing icon /icons/${item.icon}.svg (stack[${gi}].items[${ii}])`);
+      }
+    }),
+  );
   if (!DAY.test(c.updated)) errors.push(`updated: expected YYYY-MM-DD, got "${c.updated}"`);
   return errors;
 }

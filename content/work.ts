@@ -266,6 +266,7 @@ export const projects: Project[] = [
   },
   {
     slug: "zdump",
+    image: { src: "/img/zdump", width: 480, height: 231, alt: "Z-DUMP V2.0 fly-ash management screenshot" },
     group: "client",
     title: "Z-DUMP V2.0",
     summary: "Fly-ash management system for CEB's Lakvijaya Power Plant on ASP.NET Core 8 and React (TypeScript).",
@@ -273,6 +274,7 @@ export const projects: Project[] = [
   },
   {
     slug: "inventory-ceb",
+    image: { src: "/img/inventory-ceb", width: 480, height: 326, alt: "Inventory management system screenshot" },
     group: "client",
     title: "Inventory management system",
     summary: "Inventory management for CEB's Lakvijaya Power Plant on ASP.NET Core 8 and EF Core.",
@@ -280,6 +282,7 @@ export const projects: Project[] = [
   },
   {
     slug: "hms-kumudu",
+    image: { src: "/img/hms-kumudu", width: 480, height: 242, alt: "Kumudu Hospital management system screenshot" },
     group: "client",
     title: "Hospital management system",
     summary: "Hospital management for Kumudu Hospital, Matale, on ASP.NET Core and EF Core, deployed on Azure.",
@@ -287,6 +290,7 @@ export const projects: Project[] = [
   },
   {
     slug: "resper",
+    image: { src: "/img/resper", width: 480, height: 288, alt: "RESPER restaurant management screenshot" },
     group: "client",
     title: "RESPER restaurant management & POS",
     summary: "Orders, cashier, POS and kitchen management for Daiwa Lanka on Spring Boot, MySQL and React (TypeScript).",
@@ -294,6 +298,7 @@ export const projects: Project[] = [
   },
   {
     slug: "farmy",
+    image: { src: "/img/farmy", width: 480, height: 360, alt: "Farmy plant disease app screens" },
     group: "public",
     title: "Farmy",
     summary: "Flutter app that identifies plant diseases from a photo and recommends treatments.",
@@ -302,6 +307,7 @@ export const projects: Project[] = [
   },
   {
     slug: "hotel-booking",
+    image: { src: "/img/hotel-booking", width: 480, height: 240, alt: "Hotel Room Booking System screenshot" },
     group: "public",
     title: "Hotel Room Booking System",
     summary: "MERN app with room booking, PayPal payments and admin/guest live chat.",
@@ -318,6 +324,7 @@ export const projects: Project[] = [
   },
   {
     slug: "garbage-management",
+    image: { src: "/img/garbage-management", width: 480, height: 260, alt: "Garbage Management System screenshot" },
     group: "public",
     title: "Garbage Management System",
     summary: "ASP.NET and SQL Server platform that coordinates garbage collection areas in Sri Lanka.",
@@ -350,6 +357,7 @@ export const projects: Project[] = [
   },
   {
     slug: "sfd-2023",
+    image: { src: "/img/sfd-2023", width: 480, height: 480, alt: "Software Freedom Day Sri Lanka 2023 website" },
     group: "community",
     title: "Software Freedom Day Sri Lanka 2023",
     summary: "Event website for FOSS NSBM's Software Freedom Day 2023.",
@@ -358,6 +366,7 @@ export const projects: Project[] = [
   },
   {
     slug: "hackovate",
+    image: { src: "/img/hackovate", width: 480, height: 360, alt: "Hackovate Hacktoberfest 2023 website" },
     group: "community",
     title: "Hackovate · Hacktoberfest 2023",
     summary: "Event website for FOSS NSBM's Hacktoberfest 2023.",
@@ -366,6 +375,7 @@ export const projects: Project[] = [
   },
   {
     slug: "technosphere",
+    image: { src: "/img/technosphere", width: 480, height: 241, alt: "Technosphere 2022 conference website" },
     group: "community",
     title: "Technosphere 2022",
     summary: "Website for FOSS NSBM's 2022 tech conference.",

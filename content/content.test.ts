@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { existsSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 import { test } from "node:test";
 import { content } from "./index.ts";
@@ -12,8 +12,20 @@ test("the shipped content is valid, ignoring images", () => {
   assert.deepEqual(errors, []);
 });
 
-test("the shipped content is valid, including images", { todo: "images land in Task 3" }, () => {
+test("the shipped content is valid, including images", () => {
   assert.deepEqual(validateContent(content, { fileExists: publicFile }), []);
+});
+
+test("every generated image is used, with the size the pipeline wrote", () => {
+  const sizes: Record<string, { width: number; height: number }> = JSON.parse(
+    readFileSync(join(import.meta.dirname, "_sources", "image-sizes.json"), "utf8"),
+  );
+  const used = [content.profile.photo, ...content.projects.flatMap((p) => (p.image ? [p.image] : []))];
+  assert.deepEqual(used.map((i) => i.src.replace("/img/", "")).sort(), Object.keys(sizes).sort());
+  for (const img of used) {
+    const name = img.src.replace("/img/", "");
+    assert.deepEqual({ width: img.width, height: img.height }, sizes[name], `size of ${name}`);
+  }
 });
 
 test("experience follows the CV", () => {

@@ -59,7 +59,7 @@ export type Project = {
   group: "client" | "public" | "community";
 };
 
-export type StackGroup = { title: string; caption: string; items: { name: string; icon?: string }[] };
+export type StackGroup = { title: string; caption: string; items: { name: string; icon?: string; mono?: true }[] };
 
 export type Education = { school: string; detail: string; qualification: string; period: Period };
 

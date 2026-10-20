@@ -88,6 +88,13 @@ test("rejects a missing image", () => {
   assert.match(errorsFor(() => {}, { fileExists: () => false }), /missing image \/img\/photo@1x\.avif/);
 });
 
+test("rejects a stack icon with no vendored file", () => {
+  assert.match(
+    errorsFor(() => {}, { fileExists: (p: string) => !p.startsWith("/icons/") }),
+    /missing icon \/icons\/csharp\.svg/,
+  );
+});
+
 test("rejects diagram edges to unknown nodes", () => {
   assert.match(errorsFor((c) => c.featured[0]!.diagram.edges.push({ from: "a", to: "zz" })), /unknown node "zz"/);
 });

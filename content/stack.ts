@@ -2,6 +2,7 @@ import type { StackGroup } from "./schema.ts";
 
 // Same groups and logos as the GitHub README stack cards (ravindu0823/ravindu0823, scripts/stack.mjs).
 // `icon` is a devicon id vendored into public/icons by scripts/images.mjs; no icon renders as a chip.
+// `mono` marks single-colour dark logos that are re-tinted light on the dark theme.
 export const stack: StackGroup[] = [
   {
     title: "Backend",
@@ -30,7 +31,7 @@ export const stack: StackGroup[] = [
       { name: "Redis", icon: "redis" },
       { name: "RabbitMQ", icon: "rabbitmq" },
       { name: "MongoDB", icon: "mongodb" },
-      { name: "MySQL", icon: "mysql" },
+      { name: "MySQL", icon: "mysql", mono: true },
       { name: "Service Bus" },
       { name: "MassTransit" },
       { name: "Hangfire" },
@@ -49,7 +50,7 @@ export const stack: StackGroup[] = [
       { name: "Bicep" },
       { name: "Container Apps" },
       { name: "Dokploy" },
-      { name: "Linux", icon: "linux" },
+      { name: "Linux", icon: "linux", mono: true },
     ],
   },
   {
@@ -57,12 +58,12 @@ export const stack: StackGroup[] = [
     caption: "UI, models, telemetry",
     items: [
       { name: "React", icon: "react" },
-      { name: "Next.js", icon: "nextjs" },
+      { name: "Next.js", icon: "nextjs", mono: true },
       { name: "Tailwind CSS", icon: "tailwindcss" },
       { name: "Flutter", icon: "flutter" },
       { name: "TensorFlow", icon: "tensorflow" },
       { name: "OpenTelemetry", icon: "opentelemetry" },
-      { name: "Sentry", icon: "sentry" },
+      { name: "Sentry", icon: "sentry", mono: true },
       { name: "ML.NET" },
       { name: "Serilog" },
     ],

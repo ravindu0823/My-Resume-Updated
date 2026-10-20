@@ -1,0 +1,26 @@
+{
+  "note": "Sources for scripts/images.mjs. Image URLs come from the owner's live site data (live-site-2026-10-21.json). Icons are devicon v2.17.0 (MIT), the same ids and variants as the GitHub README.",
+  "images": [
+    { "name": "ravindu", "source": "https://i.ibb.co/37cN869/YOS-7452-Cropped.png", "width": 480, "alt": "Portrait of Ravindu Dhanushka Perera" },
+    { "name": "sfd-2023", "source": "https://i.ibb.co/S7HLNcc2/image.png", "width": 480, "alt": "Software Freedom Day Sri Lanka 2023 website" },
+    { "name": "hackovate", "source": "https://i.ibb.co/0VfCdzZt/image.png", "width": 480, "alt": "Hackovate Hacktoberfest 2023 website" },
+    { "name": "technosphere", "source": "https://i.ibb.co/tMSvVNsJ/image.png", "width": 480, "alt": "Technosphere 2022 conference website" },
+    { "name": "hotel-booking", "source": "https://i.ibb.co/zhftXVBP/image.png", "width": 480, "alt": "Hotel Room Booking System screenshot" },
+    { "name": "farmy", "source": "https://i.ibb.co/FLt9NxTN/image.png", "width": 480, "alt": "Farmy plant disease app screens" },
+    { "name": "resper", "source": "https://i.ibb.co/tpfW6qJt/image.png", "width": 480, "alt": "RESPER restaurant management screenshot" },
+    { "name": "garbage-management", "source": "https://i.ibb.co/GQmCzNtr/image.png", "width": 480, "alt": "Garbage Management System screenshot" },
+    { "name": "inventory-ceb", "source": "https://i.ibb.co/RT3rDbp2/image.png", "width": 480, "alt": "Inventory management system screenshot" },
+    { "name": "zdump", "source": "https://i.ibb.co/dFpnJzc/image.png", "width": 480, "alt": "Z-DUMP V2.0 fly-ash management screenshot" },
+    { "name": "hms-kumudu", "source": "https://i.ibb.co/cSYD3C88/image.png", "width": 480, "alt": "Kumudu Hospital management system screenshot" }
+  ],
+  "icons": [
+    { "id": "csharp" }, { "id": "dotnetcore" }, { "id": "blazor" }, { "id": "typescript" }, { "id": "nodejs" },
+    { "id": "python" }, { "id": "java" }, { "id": "spring" },
+    { "id": "postgresql" }, { "id": "microsoftsqlserver", "variant": "plain" }, { "id": "redis" }, { "id": "rabbitmq" },
+    { "id": "mongodb" }, { "id": "mysql", "mono": true },
+    { "id": "azure" }, { "id": "azuredevops" }, { "id": "docker" }, { "id": "kubernetes" }, { "id": "githubactions" },
+    { "id": "terraform" }, { "id": "linux", "variant": "plain", "mono": true },
+    { "id": "react" }, { "id": "nextjs", "variant": "plain", "mono": true }, { "id": "tailwindcss" }, { "id": "flutter" },
+    { "id": "tensorflow" }, { "id": "opentelemetry" }, { "id": "sentry", "mono": true }
+  ]
+}
