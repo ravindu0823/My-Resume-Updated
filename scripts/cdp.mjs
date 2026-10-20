@@ -38,6 +38,7 @@ export async function withPage(fn) {
     { stdio: ["ignore", "ignore", "pipe"] },
   );
   const exited = new Promise((resolve) => proc.once("exit", resolve));
+  let browserEndpoint;
   try {
     const wsBrowser = await new Promise((resolve, reject) => {
       let err = "";
@@ -54,6 +55,7 @@ export async function withPage(fn) {
       });
       proc.on("exit", (code) => reject(new Error(`browser exited with ${code}: ${err.slice(-400)}`)));
     });
+    browserEndpoint = wsBrowser;
     const httpBase = wsBrowser.replace(/^ws:/, "http:").replace(/\/devtools\/browser\/.*$/, "");
     const page = (await (await fetch(`${httpBase}/json`)).json()).find((t) => t.type === "page");
     const ws = new WebSocket(page.webSocketDebuggerUrl);
@@ -111,16 +113,46 @@ export async function withPage(fn) {
     ws.close();
     return result;
   } finally {
-    // Wait for the browser to exit before deleting its profile: on Windows it holds the files
-    // until then, and deleting early silently leaked ~130 MB per run into %TEMP%.
-    proc.kill();
-    await Promise.race([exited, new Promise((resolve) => setTimeout(resolve, 10000).unref())]);
+    // Close the browser and wait for it before deleting its profile: on Windows the browser and
+    // its child processes hold the files until they exit, and deleting early silently leaked
+    // ~130 MB per run into %TEMP%. Browser.close shuts the children down too; kill is the fallback.
+    const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms).unref());
+    if (browserEndpoint && proc.exitCode === null) await closeBrowser(browserEndpoint);
+    await Promise.race([exited, wait(10000)]);
+    if (proc.exitCode === null) {
+      proc.kill();
+      await Promise.race([exited, wait(5000)]);
+    }
     try {
-      rmSync(profile, { recursive: true, force: true, maxRetries: 10, retryDelay: 300 });
+      rmSync(profile, { recursive: true, force: true, maxRetries: 20, retryDelay: 500 });
     } catch (e) {
       console.warn(`could not remove temp browser profile ${profile}: ${e.message}`);
     }
   }
+}
+
+/** Asks the browser to shut down over its own DevTools endpoint; gives up after 3 s. */
+function closeBrowser(endpoint) {
+  return new Promise((resolve) => {
+    const done = () => resolve();
+    const timer = setTimeout(done, 3000);
+    timer.unref();
+    try {
+      const ws = new WebSocket(endpoint);
+      ws.addEventListener("open", () => ws.send(JSON.stringify({ id: 1, method: "Browser.close" })), { once: true });
+      ws.addEventListener("close", () => {
+        clearTimeout(timer);
+        done();
+      });
+      ws.addEventListener("error", () => {
+        clearTimeout(timer);
+        done();
+      });
+    } catch {
+      clearTimeout(timer);
+      done();
+    }
+  });
 }
 
 /** Counts pages from the page-tree /Count, falling back to /Type /Page objects. */

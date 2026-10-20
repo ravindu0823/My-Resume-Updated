@@ -17,7 +17,7 @@ pnpm build                  # check-pdf guard, then next build -> out/
 pnpm pdf                    # rebuild, print /resume to public/Ravindu-Perera-Resume.pdf (max 2 pages)
 pnpm images                 # re-download sources in content/_sources/images.json -> public/img, public/icons
 node scripts/og.mjs         # re-render app/opengraph-image.png
-node scripts/verify.mjs     # after a build: measure out/ at 320/390/1280 in both themes; exit 1 on any failure
+node scripts/verify.mjs     # after a build: measure out/ at 320/390/768/1280 in both themes; exit 1 on any failure
 node scripts/verify.mjs https://<preview-url>   # the same checks against a deployed URL
 ```
 

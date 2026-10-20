@@ -1,5 +1,5 @@
 // Measures the built site in a real browser instead of trusting the code (mobile-first rule):
-// widths 320/390/1280 x dark/light, plus a reduced-motion pass and a static-HTML pass.
+// widths 320/390/768/1280 x dark/light, plus a reduced-motion pass and a static-HTML pass.
 //   pnpm build && node scripts/verify.mjs [baseUrl]
 // Without baseUrl it serves out/. Prints a JSON report; exits 1 if any check fails.
 import { readFile } from "node:fs/promises";
@@ -87,7 +87,7 @@ const report = { base, runs: [], failures: [] };
 
 try {
   for (const path of ["/", "/resume"]) {
-    for (const width of [320, 390, 1280]) {
+    for (const width of [320, 390, 768, 1280]) {
       for (const scheme of ["dark", "light"]) {
         if (path === "/resume" && scheme === "light") continue; // the resume page has fixed colours
         const { value: m, consoleErrors } = await inspect(`${base}${path}`, { width, scheme });

@@ -101,15 +101,18 @@ body {
 
 /* Hero motion: decoration only. The resting state is the finished state, so a renderer that
    skips animation still shows the whole kicker and the whole mesh. */
+/* Typing: the kicker grows one monospace character at a time, so the caret after it follows the
+   text. Its resting width is the whole line (30ch for "$ dotnet run --project ravindu"). */
 .kicker {
+  width: 30ch;
+  overflow: hidden;
+  white-space: nowrap;
+  vertical-align: bottom;
   animation: kicker-type 1.6s steps(30, end) 0.2s both;
 }
 @keyframes kicker-type {
   from {
-    clip-path: inset(0 100% 0 0);
-  }
-  to {
-    clip-path: inset(0 0 0 0);
+    width: 0;
   }
 }
 .caret {

@@ -20,7 +20,7 @@ export function SelectedWork({ items }: { items: Featured[] }) {
             </header>
             <p className="mt-3 max-w-prose text-ink/85">{f.summary}</p>
             <ArchitectureDiagram diagram={f.diagram} slug={f.slug} title={f.title} />
-            <ul className="mt-5 flex flex-wrap gap-2" aria-label="Stack">
+            <ul className="mt-3 flex flex-wrap gap-2 md:mt-5" aria-label="Stack">
               {f.stack.map((s) => (
                 <li key={s}>
                   <Chip>{s}</Chip>

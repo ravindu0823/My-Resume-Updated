@@ -21,7 +21,7 @@ export function Hero({ profile }: { profile: Profile }) {
         <div className="absolute -top-40 -left-32 size-[28rem] rounded-full bg-violet/20 blur-3xl" />
         <div className="absolute -right-40 -bottom-48 size-[30rem] rounded-full bg-azure/15 blur-3xl" />
       </div>
-      <div className="relative mx-auto grid w-full max-w-5xl gap-10 px-4 pt-10 pb-14 sm:px-6 sm:pt-16 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:pt-24 lg:pb-20">
+      <div className="relative mx-auto grid w-full max-w-5xl gap-6 px-4 pt-10 pb-10 sm:gap-10 sm:px-6 sm:pt-16 sm:pb-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:pt-24 lg:pb-20">
         <div>
           <p className="font-mono text-sm text-cyan">
             <span className="kicker inline-block">{KICKER}</span>
@@ -33,10 +33,11 @@ export function Hero({ profile }: { profile: Profile }) {
           </h1>
           <p className="mt-4 text-lg text-ink/90 sm:text-xl">{profile.role}</p>
           <p className="mt-1 text-muted">{profile.location}</p>
-          <div className="mt-8 flex flex-wrap items-center gap-3">
+          {/* Phones: full-width CV button, then three labelled buttons in one even row. sm+: one row. */}
+          <div className="mt-8 grid grid-cols-3 gap-3 sm:flex sm:flex-wrap sm:items-center">
             <a
               href={RESUME_PDF}
-              className="inline-flex min-h-12 items-center gap-2 rounded-xl bg-gradient-to-r from-cta-from to-cta-to px-5 font-semibold text-white shadow-lg shadow-violet/20"
+              className="col-span-3 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-cta-from to-cta-to px-5 font-semibold text-white shadow-lg shadow-violet/20 sm:col-auto"
             >
               <svg viewBox="0 0 24 24" className="size-5" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden="true">
                 <path d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14" strokeLinecap="round" strokeLinejoin="round" />
@@ -49,14 +50,17 @@ export function Hero({ profile }: { profile: Profile }) {
                 href={l.href}
                 aria-label={l.kind === "email" ? `Email ${l.label}` : l.label}
                 rel={l.kind === "email" ? undefined : "me noopener"}
-                className="inline-flex size-12 items-center justify-center rounded-xl border border-line bg-surface/70 text-ink transition-colors hover:border-cyan"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-xl border border-line bg-surface/70 text-sm text-ink transition-colors hover:border-cyan sm:w-12"
               >
                 <SocialIcon kind={l.kind} className="size-5" />
+                <span aria-hidden="true" className="sm:hidden">
+                  {l.kind === "email" ? "Email" : l.label}
+                </span>
               </a>
             ))}
           </div>
         </div>
-        <ServiceMesh className="mx-auto w-full max-w-md lg:max-w-none" />
+        <ServiceMesh className="mx-auto w-full max-w-[19rem] sm:max-w-md lg:max-w-none" />
       </div>
     </section>
   );
