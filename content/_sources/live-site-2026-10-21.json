@@ -1,0 +1,356 @@
+{
+ "about": {
+  "about": "Enthusiastic tech professional with 3+ years of software engineering experience, specializing in full-stack development and R&D. Skilled at crafting innovative products that enhance efficiency and user satisfaction.  Holds a First-Class Honors BSc in Software Engineering, with a proven ability to master new technologies rapidly and excel in diverse work environments. Dedicated open-source contributor, recognized for delivering clean, maintainable code that adheres to best practices. Committed to continuous learning and staying current with emerging industry trends.",
+  "aboutImage": "https://i.ibb.co/37cN869/YOS-7452-Cropped.png",
+  "aboutImageCaption": "<NightFury/>",
+  "callUrl": "",
+  "resumeUrl": "https://drive.google.com/file/d/1U6deHhZH5R5tngOntjGY0pfVxder4_ox/view?usp=sharing",
+  "title": "Software Engineer | .NET CORE Developer"
+ },
+ "educations": [
+  {
+   "degree": "Advanced Level",
+   "duration": "2018 - 2020",
+   "institute": "Central College | Piliyandala"
+  },
+  {
+   "degree": "BSc (Hons) Software Engineering | University of Plymouth",
+   "desc": [
+    "Graduated with a First-Class Honors Software Engineering Degree",
+    "Worked on web application development using React, .NET, and TypeScript, designing a database system using SQL and MongoDB, and developing mobile applications using Flutter and React Native.",
+    "Familiar with software development methodologies and project management practices, including Agile and Waterfall methodologies."
+   ],
+   "duration": "2021 June - 2024 December",
+   "institute": "University of Plymouth"
+  }
+ ],
+ "experiences": [
+  {
+   "company": "EXE.LK",
+   "desc": [
+    "Assisted with design and development of machine learning applications.",
+    "Worked on building the product from scratch and built multiple dashboards.",
+    "Skills: React · Angular · .NET · Python · NodeJS · MySQL · SQL Server · REST APIs"
+   ],
+   "duration": "November 2022 - May 2023",
+   "position": "Intern Research And Development Software Engineer"
+  },
+  {
+   "company": "Techwire Lanka Pvt Ltd",
+   "desc": [
+    "Assisted with design and development of ASP .NET applications.",
+    "Worked on building the product from scratch and built multiple dashboards.",
+    "Skills: React · ASP .NET · NodeJS · MySQL · SQL Server · REST APIs · Azure · Docker"
+   ],
+   "duration": "2023 December - 2024 August",
+   "position": "Associate Software Engineer"
+  },
+  {
+   "company": "Techwire Lanka Pvt Ltd",
+   "desc": [
+    "Assisted with design and development of ASP .NET applications.",
+    "Worked on building the product from scratch and built multiple dashboards.",
+    "Skills: React · ASP .NET · NodeJS · MySQL · SQL Server · REST APIs · Azure · Docker"
+   ],
+   "duration": "2024 August - Present",
+   "position": "Software Engineer"
+  },
+  {
+   "company": "Amplify Solutions Pvt Ltd",
+   "desc": [
+    "Assisted with design and development of React web application with the NEST.js API",
+    "Skills: React ·NodeJS · MongoDB · REST APIs · Docker"
+   ],
+   "duration": "2024 November - 2025 March",
+   "position": "Software Engineer"
+  },
+  {
+   "company": "747 Live",
+   "desc": [
+    "Senior Software Engineer specializing in .NET Core: designing and implementing high-performance, scalable backend systems.",
+    "Expert in concurrency handling (async/await, Task Parallel Library, thread-safety, locking strategies, distributed locks) and optimizing throughput and latency.",
+    "Experience with microservices, RESTful APIs, gRPC, Entity Framework Core, Dapper, SQL Server, and Redis caching for consistency and performance.",
+    "Implemented reliability and observability (structured logging, tracing, metrics), CI/CD pipelines, Docker, and Azure deployments.",
+    "Mentored engineers, led code reviews, defined architecture and best practices, and drove performance tuning and capacity planning."
+   ],
+   "duration": "2025 April - Present",
+   "position": "Software Engineer"
+  }
+ ],
+ "main": {
+  "heroImage": "https://i.ibb.co/37cN869/YOS-7452-Cropped.png",
+  "name": "Ravindu Perera",
+  "shortDesc": "I'm interested in creating and designing products that simplify daily life for people.",
+  "techStackImages": [
+   "https://img.icons8.com/?size=100&id=l75OEUJkPAk4&format=png&color=000000",
+   "https://img.icons8.com/?size=100&id=1BC75jFEBED6&format=png&color=000000",
+   "https://img.icons8.com/?size=100&id=wpZmKzk11AzJ&format=png&color=000000",
+   "https://img.icons8.com/?size=100&id=NfbyHexzVEDk&format=png&color=000000",
+   "https://img.icons8.com/?size=100&id=cdYUlRaag9G9&format=png&color=000000",
+   "https://img.icons8.com/?size=100&id=17842&format=png&color=000000",
+   "https://img.icons8.com/?size=100&id=90519&format=png&color=000000"
+  ],
+  "titles": [
+   ".NET CORE Developer",
+   "Tech Enthusiast",
+   "Mobile App Developer",
+   null,
+   "Software Engineer"
+  ]
+ },
+ "projects": [
+  {
+   "category": "MERN Stack",
+   "image": "https://i.ibb.co/S7HLNcc2/image.png",
+   "links": {
+    "code": "https://github.com/fossnsbm/sfd2023-web",
+    "video": "",
+    "visit": "https://github.com/fossnsbm/sfd2023-web"
+   },
+   "name": "SFD | Software Freedom Day Sri Lanka 2023 (FOSS NSBM)",
+   "techstack": "React, TypeScript, Next.Js"
+  },
+  {
+   "category": "MERN Stack",
+   "image": "https://i.ibb.co/0VfCdzZt/image.png",
+   "links": {
+    "code": "https://github.com/fossnsbm/hackovate-web",
+    "video": "",
+    "visit": "https://github.com/fossnsbm/hackovate-web"
+   },
+   "name": "Hackovate | Hacktoberfest 2023 (FOSS NSBM)",
+   "techstack": "React, JavaScript, Vite"
+  },
+  {
+   "category": "MERN Stack",
+   "image": "https://i.ibb.co/tMSvVNsJ/image.png",
+   "links": {
+    "code": "https://github.com/fossnsbm/technosphere-web",
+    "video": "",
+    "visit": "https://wondrous-meerkat-54a7e9.netlify.app/"
+   },
+   "name": "Technosphere | Tech Conference 2022 (FOSS NSBM)",
+   "techstack": "React, JavaScript, Vite"
+  },
+  {
+   "category": "MERN Stack",
+   "image": "https://i.ibb.co/zhftXVBP/image.png",
+   "links": {
+    "code": "https://github.com/ravindu0823/Hotel-Room-Booking-System",
+    "video": "",
+    "visit": "https://github.com/ravindu0823/Hotel-Room-Booking-System"
+   },
+   "name": "Hotel Room Booking System",
+   "techstack": "React, NodeJS, Express, MongoDB, Mongoose, REST APIs"
+  },
+  {
+   "category": "MERN Stack",
+   "image": "https://i.ibb.co/0tPN4L8/MUSIFY-Final-Presentation.png",
+   "links": {
+    "code": "https://github.com/ravindu0823/Note-Prediction-Web-Application",
+    "video": "",
+    "visit": "https://github.com/ravindu0823/Note-Prediction-Web-Application"
+   },
+   "name": "MUSIFY | Note Prediction Web Application",
+   "techstack": "React, NodeJS, Express, MongoDB, Mongoose, REST APIs, TypeScript, Python, TensorFlow"
+  },
+  {
+   "category": "Flutter",
+   "image": "https://i.ibb.co/FLt9NxTN/image.png",
+   "links": {
+    "code": "https://github.com/ravindu0823/Farmy",
+    "video": "",
+    "visit": "https://github.com/ravindu0823/Farmy"
+   },
+   "name": "Farmy | Plant Disease Classification Cross Platform Mobile App",
+   "techstack": "Flutter, Dart, Firebase, RoboFlow, Yolo, Python"
+  },
+  {
+   "category": "Spring Boot",
+   "image": "https://i.ibb.co/tpfW6qJt/image.png",
+   "links": {
+    "code": "",
+    "video": "",
+    "visit": ""
+   },
+   "name": "RESPER | Restaurant Management System | Daiva Lanka PVT LTD (Ongoing)",
+   "techstack": "Flutter, Dart, Firebase, RoboFlow, Yolo, Python"
+  },
+  {
+   "category": "Native Java",
+   "image": "https://i.ibb.co/1fgGLKd9/image.png",
+   "links": {
+    "code": "https://github.com/ravindu0823/Computing-Group-Project",
+    "video": "",
+    "visit": "https://github.com/ravindu0823/Computing-Group-Project"
+   },
+   "name": "Farmy | Plant Disease Classification Mobile App",
+   "techstack": "Native Java, Firebase, RoboFlow, Yolo, Python"
+  },
+  {
+   "category": "Native Java",
+   "image": "https://i.ibb.co/1fgGLKd9/image.png",
+   "links": {
+    "code": "https://github.com/ravindu0823/Learning-management-system",
+    "video": "",
+    "visit": "https://github.com/ravindu0823/Learning-management-system"
+   },
+   "name": "Learning Management System",
+   "techstack": "Native Java, Firebase"
+  },
+  {
+   "category": ".NET CORE",
+   "image": "https://i.ibb.co/GQmCzNtr/image.png",
+   "links": {
+    "code": "https://github.com/ravindu0823/ASP-.NET-Web-Application",
+    "video": "",
+    "visit": "https://github.com/ravindu0823/ASP-.NET-Web-Application"
+   },
+   "name": "Waste Management System",
+   "techstack": ".NET Framework 7.2, C#, SQL Server"
+  },
+  {
+   "category": ".NET CORE",
+   "image": "https://i.ibb.co/RT3rDbp2/image.png",
+   "links": {
+    "code": "",
+    "video": "",
+    "visit": ""
+   },
+   "name": "Inventory Management System | Lakvijaya Power Plant (C.E.B.)",
+   "techstack": ".NET CORE 8, C#, SQL Server, EFCORE, ASP.NET CORE, Azure, Docker"
+  },
+  {
+   "category": ".NET CORE",
+   "image": "https://i.ibb.co/dFpnJzc/image.png",
+   "links": {
+    "code": "",
+    "video": "",
+    "visit": ""
+   },
+   "name": "Z-DUMP V2.0 | Lakvijaya Power Plant (C.E.B.)",
+   "techstack": ".NET CORE 8, C#, SQL Server, EFCORE, ASP.NET CORE, Azure, Docker"
+  },
+  {
+   "category": ".NET CORE",
+   "image": "https://i.ibb.co/cSYD3C88/image.png",
+   "links": {
+    "code": "",
+    "video": "",
+    "visit": ""
+   },
+   "name": "Hospital Management System | Kumudu Hospital Matale",
+   "techstack": ".NET CORE 6, C#, SQL Server, EFCORE, ASP.NET CORE, Azure, Docker"
+  }
+ ],
+ "skills": [
+  {
+   "category": "Frontend",
+   "image": "https://img.icons8.com/color/144/null/javascript--v1.png",
+   "name": "JavaScript"
+  },
+  {
+   "category": "Frontend",
+   "image": "https://img.icons8.com/?size=100&id=wpZmKzk11AzJ&format=png&color=000000",
+   "name": "TypeScript"
+  },
+  {
+   "category": "Frontend",
+   "image": "https://img.icons8.com/?size=100&id=MWiBjkuHeMVq&format=png&color=000000",
+   "name": "NextJs"
+  },
+  {
+   "category": "Frontend",
+   "image": "https://img.icons8.com/?size=100&id=dJjTWMogzFzg&format=png&color=000000",
+   "name": "Vite"
+  },
+  {
+   "category": "Frontend",
+   "image": "https://img.icons8.com/?size=100&id=CIAZz2CYc6Kc&format=png&color=000000",
+   "name": "TailwindCSS"
+  },
+  {
+   "category": "Frontend",
+   "image": "https://img.icons8.com/?size=100&id=NfbyHexzVEDk&format=png&color=000000",
+   "name": "React"
+  },
+  {
+   "category": "Backend",
+   "image": "https://img.icons8.com/?size=100&id=l75OEUJkPAk4&format=png&color=000000",
+   "name": "Python"
+  },
+  {
+   "category": "Backend",
+   "image": "https://img.icons8.com/?size=100&id=90519&format=png&color=000000",
+   "name": "SpringBoot"
+  },
+  {
+   "category": "Backend",
+   "image": "https://img.icons8.com/?size=100&id=1BC75jFEBED6&format=png&color=000000",
+   "name": ".NetCore"
+  },
+  {
+   "category": "Backend",
+   "image": "https://img.icons8.com/?size=100&id=fAMVO_fuoOuC&format=png&color=000000",
+   "name": "PHP"
+  },
+  {
+   "category": "Backend",
+   "image": "https://img.icons8.com/?size=100&id=hsPbhkOH4FMe&format=png&color=000000",
+   "name": "NodeJs"
+  },
+  {
+   "category": "Backend",
+   "image": "https://img.icons8.com/?size=100&id=rgPSE6nAB766&format=png&color=000000",
+   "name": "MySQL"
+  },
+  {
+   "category": "Backend",
+   "image": "https://img.icons8.com/?size=100&id=bosfpvRzNOG8&format=png&color=000000",
+   "name": "MongoDB"
+  },
+  {
+   "category": "Tools",
+   "image": "https://img.icons8.com/material-outlined/96/null/github.png",
+   "name": "GitHub"
+  },
+  {
+   "category": "Tools",
+   "image": "https://img.icons8.com/?size=100&id=y7WGoWNuIWac&format=png&color=000000",
+   "name": "Visual Studio"
+  },
+  {
+   "category": "Tools",
+   "image": "https://img.icons8.com/?size=100&id=9OGIyU8hrxW5&format=png&color=000000",
+   "name": "Visual Studio Code"
+  },
+  {
+   "category": "Tools",
+   "image": "https://img.icons8.com/?size=100&id=7uBdyxPr0QPx&format=png&color=000000",
+   "name": "JetBrains Rider"
+  },
+  {
+   "category": "Tools",
+   "image": "https://img.icons8.com/?size=100&id=cdYUlRaag9G9&format=png&color=000000",
+   "name": "Docker"
+  }
+ ],
+ "socials": [
+  {
+   "icon": "FaLinkedin",
+   "link": "https://www.linkedin.com/in/ravindu-dhanushka/"
+  },
+  {
+   "icon": "FaGithub",
+   "link": "https://www.linkedin.com/in/ravindu-dhanushka/"
+  },
+  {
+   "icon": "FaInstagram",
+   "link": "https://www.instagram.com/_d_h_a_n_u_23/"
+  },
+  {
+   "icon": "FaFacebook",
+   "link": "https://www.facebook.com/muditha.warawita"
+  }
+ ]
+}
