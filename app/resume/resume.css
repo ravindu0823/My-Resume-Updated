@@ -1,0 +1,186 @@
+/* The printable resume. Fixed light colours: the PDF must not inherit the site's dark theme. */
+@page {
+  size: A4;
+  margin: 11mm 13mm;
+}
+
+.resume-page {
+  min-height: 100dvh;
+  background: #e9edf5;
+  color: #111827;
+  padding: 1rem;
+}
+
+.resume-toolbar {
+  max-width: 210mm;
+  margin: 0 auto 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.resume-toolbar a {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  padding: 0 1rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.resume-toolbar .back {
+  color: #1f2937;
+  border: 1px solid #c7cfdd;
+}
+
+.resume-toolbar .download {
+  color: #fff;
+  background: linear-gradient(90deg, #6d28d9, #0369a1);
+}
+
+.resume {
+  max-width: 210mm;
+  margin: 0 auto;
+  background: #fff;
+  color: #111827;
+  padding: 14mm;
+  box-shadow: 0 10px 40px rgb(15 23 42 / 0.12);
+  font-size: 9.4pt;
+  line-height: 1.34;
+}
+
+.resume a {
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+.resume-name {
+  font-size: 19pt;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  margin: 0;
+  color: #0f172a;
+}
+
+.resume-role {
+  margin: 2pt 0 0;
+  font-size: 11pt;
+  color: #374151;
+}
+
+.resume-contact {
+  margin: 4pt 0 0;
+  font-size: 9pt;
+  color: #374151;
+}
+
+.resume-h2 {
+  margin: 8pt 0 3pt;
+  padding-bottom: 2pt;
+  border-bottom: 1.2pt solid #6d28d9;
+  font-size: 10.5pt;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #4c1d95;
+}
+
+.resume p {
+  margin: 0 0 3pt;
+}
+
+.resume ul {
+  margin: 2pt 0 0;
+  padding-left: 13pt;
+  /* Tailwind's preflight removes list markers; the resume needs them. */
+  list-style: disc;
+}
+
+.resume li {
+  margin: 0 0 1pt;
+}
+
+.resume-entry {
+  margin: 0 0 4pt;
+  break-inside: avoid;
+}
+
+.resume-entry-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0 8pt;
+}
+
+.resume-entry-head span {
+  color: #4b5563;
+  font-size: 9pt;
+}
+
+.resume-note,
+.resume-stack {
+  color: #4b5563;
+  font-size: 9pt;
+}
+
+.resume-compact {
+  columns: 2;
+  column-gap: 14pt;
+}
+
+.resume-compact li {
+  break-inside: avoid;
+}
+
+.resume-skills {
+  margin: 0;
+}
+
+.resume-skills div {
+  margin: 0 0 1.5pt;
+}
+
+.resume-skills dt {
+  display: inline;
+  font-weight: 600;
+}
+
+.resume-skills dd {
+  display: inline;
+  margin: 0;
+}
+
+@media print {
+  /* Chromium paints the @page margin from the root's colour scheme, and the site's root is
+     color-scheme: dark (navy). Force light, or every PDF page gets a black frame. */
+  :root,
+  :root[data-theme] {
+    color-scheme: light !important;
+  }
+  html,
+  body {
+    background: #fff !important;
+  }
+  .resume-page {
+    background: #fff;
+    padding: 0;
+  }
+  .resume-toolbar {
+    display: none;
+  }
+  .resume {
+    max-width: none;
+    padding: 0;
+    box-shadow: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .resume {
+    padding: 1.25rem;
+    font-size: 10.5pt;
+  }
+}
