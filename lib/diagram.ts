@@ -51,3 +51,9 @@ export function layoutDiagram(d: Diagram, opts: Options = {}): Layout {
   const maxRow = Math.max(...d.nodes.map((n) => n.row));
   return { width: (maxCol + 1) * cellW, height: (maxRow + 1) * cellH, nodes, edges };
 }
+
+/** "Mobile & web to ASP.NET Core API (…); RabbitMQ asynchronously to Hangfire jobs." for an aria-label. */
+export function describeFlow(d: Diagram): string {
+  const label = (id: string) => d.nodes.find((n) => n.id === id)?.label ?? id;
+  return `${d.edges.map((e) => `${label(e.from)} ${e.async ? "asynchronously to" : "to"} ${label(e.to)}${e.label ? ` (${e.label})` : ""}`).join("; ")}.`;
+}

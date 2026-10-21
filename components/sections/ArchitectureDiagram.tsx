@@ -1,5 +1,5 @@
 import type { Diagram, DiagramNode } from "@/content/schema.ts";
-import { EDGE_LABEL_CHAR, layoutDiagram } from "@/lib/diagram.ts";
+import { describeFlow, EDGE_LABEL_CHAR, layoutDiagram } from "@/lib/diagram.ts";
 
 const KIND: Record<DiagramNode["kind"], { stroke: string; dash?: string; label: string }> = {
   client: { stroke: "var(--muted)", label: "client" },
@@ -60,15 +60,14 @@ export function ArchitectureDiagram({ diagram, slug, title }: { diagram: Diagram
         <FlowList diagram={diagram} title={title} className="mt-2" />
       </details>
 
-      {/* From md the drawing replaces the list visually; screen readers still get the flow. */}
-      <FlowList diagram={diagram} title={title} className="sr-only hidden md:block" />
-
       <svg
         viewBox={`-8 -8 ${layout.width + 16} ${layout.height + 16}`}
         className="mx-auto hidden h-auto w-full md:block"
         style={{ maxWidth: layout.width + 16 }}
         role="img"
-        aria-label={`${title} architecture: ${diagram.nodes.map((n) => n.label).join(", ")}`}
+        // The label carries the whole flow, so screen readers get the same information as the
+        // phone list without a second copy of it in the page.
+        aria-label={`${title} architecture. ${describeFlow(diagram)}`}
       >
         <defs>
           <marker id={arrow} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">

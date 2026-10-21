@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { test } from "node:test";
 import type { Diagram } from "../content/schema.ts";
 import { featured } from "../content/work.ts";
-import { EDGE_LABEL_CHAR, layoutDiagram } from "./diagram.ts";
+import { describeFlow, EDGE_LABEL_CHAR, layoutDiagram } from "./diagram.ts";
 
 const two = (b: { col: 0 | 1 | 2 | 3; row: 0 | 1 | 2 }): Diagram => ({
   nodes: [
@@ -70,4 +70,10 @@ test("labels on horizontal edges fit the gap between columns", () => {
       assert.ok(e.label.length * EDGE_LABEL_CHAR + 12 <= gap, `${f.slug}: label "${e.label}" is too wide for the gap`);
     }
   }
+});
+
+test("describes the flow in words for screen readers", () => {
+  const d = two({ col: 1, row: 0 });
+  d.edges = [{ from: "a", to: "b", label: "writes" }, { from: "b", to: "a", async: true }];
+  assert.equal(describeFlow(d), "A to B (writes); B asynchronously to A.");
 });

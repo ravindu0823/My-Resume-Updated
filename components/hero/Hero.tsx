@@ -18,8 +18,9 @@ export function Hero({ profile }: { profile: Profile }) {
       {/* Decoration lives in its own clipped layer, so the section never clips real content. */}
       <div aria-hidden="true" className="pointer-events-none absolute inset-0 overflow-hidden">
         <div className="hero-grid absolute inset-0 opacity-60" />
-        <div className="absolute -top-40 -left-32 size-[28rem] rounded-full bg-violet/20 blur-3xl" />
-        <div className="absolute -right-40 -bottom-48 size-[30rem] rounded-full bg-azure/15 blur-3xl" />
+        {/* Radial gradients, not blurred circles: same glow, no expensive blur on a slow phone CPU. */}
+        <div className="absolute -top-56 -left-48 size-[40rem] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--violet)_22%,transparent),transparent)]" />
+        <div className="absolute -right-56 -bottom-64 size-[42rem] rounded-full bg-[radial-gradient(closest-side,color-mix(in_srgb,var(--azure)_16%,transparent),transparent)]" />
       </div>
       <div className="relative mx-auto grid w-full max-w-5xl gap-6 px-4 pt-10 pb-10 sm:gap-10 sm:px-6 sm:pt-16 sm:pb-14 lg:grid-cols-[1.1fr_0.9fr] lg:items-center lg:pt-24 lg:pb-20">
         <div>
